@@ -1,0 +1,205 @@
+{% use 'bootstrap_3_layout.html.twig' %}
+
+{% block form_start %}
+    {%- spaceless %}
+        {% set attr = attr|merge({'novalidate': true}) %}
+        {% if frujax is defined %}
+            {% set attr = attr|merge({'data-fj': ''}) %}
+            {% for option, value in frujax %}
+                {% if value is same as(true) %}
+                    {% set value = 'true' %}
+                {% elseif value is same as(false) %}
+                    {% set value = 'false' %}
+                {% elseif value is iterable %}
+                    {% set value = value|json_encode %}
+                {% endif %}
+                {% set attr = attr|merge({('data-fj-'~option): value}) %}
+            {% endfor %}
+        {% endif %}
+    {% endspaceless %}
+    {{- parent() -}}
+{% endblock %}
+
+{% block row_attributes -%}
+    {%- for attrname, attrvalue in row_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor -%}
+{%- endblock %}
+
+{% block form_row -%}
+    {% set row_attr = row_attr|attr_add_class('form-group') %}
+    {% if (not compound or force_error|default(false)) and not valid %}
+        {% set row_attr = row_attr|attr_add_class('has-error') %}
+    {% endif %}
+    <div {{ block('row_attributes') }}>
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock %}
+
+{% block form_widget %}
+    {{- parent() -}}
+    {%- if help is not same as(false) -%}
+        <div class="help-block">{{ help|markdown }}</div>
+    {%- endif -%}
+{% endblock %}
+
+{% block checkbox_label %}
+    {{- parent() -}}
+    {%- if help is not same as(false) -%}
+        <div class="help-block">{{ help|markdown }}</div>
+    {%- endif -%}
+{% endblock %}
+
+{% block button_row -%}
+    {% set row_attr = row_attr|attr_add_class('form-group') %}
+    <div {{ block('row_attributes') }}>
+        {{- form_widget(form) -}}
+    </div>
+{%- endblock %}
+
+{% block checkbox_row -%}
+    {% set row_attr = row_attr|attr_add_class('form-group') %}
+    {% if not valid %}
+        {% set row_attr = row_attr|attr_add_class('has-error') %}
+    {% endif %}
+    <div {{ block('row_attributes') }}>
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock checkbox_row %}
+
+{% block radio_row -%}
+    {% set row_attr = row_attr|attr_add_class('form-group') %}
+    {% if not valid %}
+        {% set row_attr = row_attr|attr_add_class('has-error') %}
+    {% endif %}
+    <div {{ block('row_attributes') }}>
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </div>
+{%- endblock radio_row %}
+
+{% block email_widget -%}
+    <div class="input-group">
+        <span class="input-group-addon">@</span>
+        {{- parent() -}}
+    </div>
+{%- endblock %}
+
+{% block file_widget -%}
+    {% set attr = attr|attr_add_class('custom-file-input') %}
+    <label class="custom-file m-b-2">
+        {{- block('form_widget_simple') -}}
+        <span class="custom-file-control form-control">Файл не выбран</span>
+    </label>
+{%- endblock %}
+
+{% block submit_widget -%}
+    {%- set attr = attr|attr_add_class('btn-primary') -%}
+    {{- parent() -}}
+{%- endblock %}
+
+{% block ruwork_admin_switcher_widget -%}
+    {%- set widget -%}
+        {{ block('checkbox_widget', 'form_div_layout.html.twig') }}
+        <div class="switcher-indicator">
+            <div class="switcher-yes">{{ label_yes }}</div>
+            <div class="switcher-no">{{ label_no }}</div>
+        </div>
+    {%- endset -%}
+    {{- form_label(form, null, {
+        widget: widget,
+        label_attr: { class: 'switcher' }
+    }) -}}
+{%- endblock %}
+
+{% block ruwork_admin_date_widget -%}
+    {%- set type, attr = 'text', attr|attr_add_class('form-control-date') -%}
+    {{- block('date_widget') -}}
+{%- endblock %}
+
+{% block ruwork_admin_markdown_widget -%}
+    {%- set attr = attr|attr_add_class('form-control-markdown') -%}
+    {{- block('textarea_widget') -}}
+{%- endblock %}
+
+{% block ruwork_admin_collection_widget -%}
+    {%- set attr = attr|attr_add_class('form-collection') -%}
+    {%- set attr = attr|merge({'data-increment': form.children|length ? (max(form.children|keys) + 1) : 0}) -%}
+    {{- block('form_widget') -}}
+{%- endblock %}
+
+{% block ruwork_admin_multi_collection_widget -%}
+    {%- set attr = attr|attr_add_class('form-collection') -%}
+    {%- set attr = attr|merge({'data-increment': form.children|length ? (max(form.children|keys) + 1) : 0}) -%}
+    {{- block('form_widget') -}}
+{%- endblock %}
+
+{% block ruwork_admin_alias_widget -%}
+    {%- if translit_from is same as(false) %}
+        {{- block('form_widget_simple') -}}
+    {%- else -%}
+        <div class="input-group">
+            {{- block('form_widget_simple') -}}
+            <span class="input-group-btn">
+                <button type="button" class="btn"
+                        data-generate-alias-from="#{{ form.parent[translit_from].vars.id }}"
+                        data-generate-alias-to="#{{ id }}"
+                        title="Сгенерировать из значения поля &quot;{{ form.parent[translit_from].vars.label }}&quot;">
+                    <i class="fa fa-language"></i>
+                </button>
+            </span>
+        </div>
+    {%- endif -%}
+{%- endblock %}
+
+{% block ruwork_admin_date_range_widget -%}
+    <div class="input-daterange input-group">
+        <span class="input-group-addon">с</span>
+        {{- form_widget(form.start) -}}
+        <span class="input-group-addon">до</span>
+        {{- form_widget(form.finish) -}}
+    </div>
+{%- endblock %}
+
+{% block ruwork_admin_range_widget %}
+    {% set attr = attr|attr_add_class('form-control-range') %}
+    {%- set attr = attr|merge({
+    'data-min': min,
+    'data-max': max,
+    'data-from': value,
+    'data-step': step,
+    'data-grid': 'true',
+    'data-grid-snap': 'true',
+    }) -%}
+    {% set value = '' %}
+    <div class="px-irs-bullet">
+        <!--suppress HtmlFormInputWithoutLabel -->
+        {{ block('form_widget_simple') }}
+    </div>
+{% endblock %}
+
+{% block ruwork_admin_min_max_widget %}
+    {%- set form_min, form_max = form[min_child], form[max_child] -%}
+    {% set attr = attr|attr_add_class('form-control-min-max') %}
+    {%- set attr = attr|merge({
+    'data-min': min,
+    'data-max': max,
+    'data-step': step,
+    'data-from': form_min.vars.value,
+    'data-to': form_max.vars.value,
+    'data-type': 'double',
+    'data-grid': 'true',
+    'data-grid-snap': 'true',
+    'data-min-input': '#' ~ form_min.vars.id,
+    'data-max-input': '#' ~ form_max.vars.id,
+    }) -%}
+    <div class="px-irs-bullet">
+        <!--suppress HtmlFormInputWithoutLabel -->
+        <input type="text" {{ block('widget_container_attributes') }}>
+    </div>
+    {{- form_errors(form_min) -}}
+    {{- form_errors(form_max) -}}
+    {{- form_widget(form_min) -}}
+    {{- form_widget(form_max) -}}
+{% endblock %}

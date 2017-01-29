@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <meta charset="{{ _charset }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    {% block meta '' %}
+
+    <title>{% block title '' %}</title>
+
+    {% block css %}
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,800,300&subset=latin" rel="stylesheet" type="text/css">
+        <link href="{{ asset('bundles/ruworkadmin/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/ruworkadmin/css/pixeladmin.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/ruworkadmin/css/widgets.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/ruworkadmin/css/themes/default.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/ruworkadmin/vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('bundles/ruworkadmin/css/ruwork_admin.css') }}" rel="stylesheet">
+    {% endblock %}
+</head>
+<body>
+{% include '@RuworkAdmin/nav_left.html.twig' %}
+
+{% include '@RuworkAdmin/nav_top.html.twig' %}
+
+<div class="px-content">
+    {#<div class="page-header">
+        <h1>{{ block('title') }}</h1>
+    </div>#}
+
+    {% block content '' %}
+</div>
+
+{% block js %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {callback: 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('bundles/ruworkadmin/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('bundles/ruworkadmin/js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/frujax.js') }}"></script>
+    <script src="{{ asset('bundles/ruworkadmin/js/pixeladmin.min.js') }}"></script>
+    <script src="{{ asset('bundles/ruworkadmin/vendor/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js') }}"></script>
+    <script src="{{ asset('bundles/ruworkadmin/vendor/bootstrap-markdown/locale/bootstrap-markdown.ru.js') }}"></script>
+    <script src="{{ asset('bundles/ruworkadmin/js/ruwork_admin.js') }}"></script>
+{% endblock %}
+</body>
+</html>

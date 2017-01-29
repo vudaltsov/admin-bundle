@@ -1,0 +1,79 @@
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.panel .list-group-item {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.custom-file-control:after {
+    content: 'Выберите файл';
+}
+
+.table-col-tiny {
+    width: 1px;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+
+.table-responsive {
+    border: none !important;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-table {
+    position: relative;
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: none;
+}
+
+.form-table td,
+.form-table th {
+    vertical-align: top;
+    border: none;
+}
+
+.form-table td:not(:last-child),
+.form-table th:not(:last-child) {
+    padding-right: 22px;
+}
+
+@media screen and (max-width: 543px) {
+    .table-responsive > .form-table td,
+    .table-responsive > .form-table th {
+        white-space: nowrap;
+    }
+}
+
+.btn-icon,
+.btn-icon:hover,
+.btn-icon:focus,
+.btn-icon:active {
+    color: inherit !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    vertical-align: middle;
+    padding-left: 0;
+    padding-right: 0;
+    box-shadow: none;
+}
+
+.panel-heading-controls .btn-icon {
+    font-size: 17px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    line-height: 1;
+}
+
+.help-block {
+    margin-bottom: 0;
+}

@@ -1,0 +1,27 @@
+{% extends '@RuworkAdmin/widgets/panel.html.twig' %}
+
+{% block content %}
+    {% if items %}
+        <div class="table-responsive">
+            {% block table '' %}
+        </div>
+    {% else %}
+        <div class="panel-body">
+            Объекты отсутствуют
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% macro btn_edit(href) %}
+    <a href="{{ href }}" title="Редактировать"
+       class="btn btn-xs btn-default btn-rounded">
+        <i class="fa fa-pencil"></i>
+    </a>
+{% endmacro %}
+
+{% macro btn_eye(href) %}
+    <a href="{{ href }}" target="_blank" title="Открыть в публичной части в новом окне"
+       class="btn btn-xs btn-default btn-rounded">
+        <i class="fa fa-eye"></i>
+    </a>
+{% endmacro %}
