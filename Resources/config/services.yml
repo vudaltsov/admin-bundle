@@ -1,11 +1,11 @@
 services:
   ruwork_admin.form.extension.form:
-    class: AppBundle\Form\Extension\FormTypeExtension
+    class: Ruwork\AdminBundle\Form\Extension\FormTypeExtension
     tags:
       - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\FormType }
 
   ruwork_admin.form.extension.button:
-    class: AppBundle\Form\Extension\ButtonTypeExtension
+    class: Ruwork\AdminBundle\Form\Extension\ButtonTypeExtension
     tags:
       - { name: form.type_extension, extended_type: Symfony\Component\Form\Extension\Core\Type\ButtonType }
 

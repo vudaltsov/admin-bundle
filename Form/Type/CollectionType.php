@@ -2,7 +2,7 @@
 
 namespace Ruwork\AdminBundle\Form\Type;
 
-use AppBundle\Component\Form\AbstractType;
+use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType as BaseCollectionType;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
