@@ -1,0 +1,34 @@
+{
+    "web_dir": "Resources/public",
+    "scss": {
+        "dest": "css",
+        "src": [
+            "Resources/public/scss/app.scss"
+        ]
+    },
+    "vendor": {
+        "dest": "vendor",
+        "src": [
+            "bower_components/jquery/dist/jquery.min.js",
+            "bower_components/select2/dist/js/i18n/ru.js",
+            "bower_components/font-awesome/css/font-awesome.min.css",
+            "bower_components/font-awesome/fonts/**.*",
+            "bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js",
+            "bower_components/open-sans-fontface/fonts/*/**.*",
+            "bower_components/open-sans-fontface/open-sans.css"
+        ]
+    },
+    "watch": {
+        "scss": [
+            "Resources/public/scss/**/*.scss"
+        ],
+        "reload": [
+            "app/Resources/translations/**/*.yml",
+            "app/Resources/views/**/*.twig",
+            "web/bundles/**/*.*",
+            "web/fonts/**/*.*",
+            "web/img/**/*.*",
+            "web/js/**/*.js"
+        ]
+    }
+}

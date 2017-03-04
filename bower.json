@@ -1,0 +1,12 @@
+{
+  "name": "ruwork-admin-bundle",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "select2": "^4.0.3",
+    "font-awesome": "fontawesome#^4.7.0",
+    "bootstrap-datepicker": "^1.6.4",
+    "open-sans-fontface": "^1.4.2"
+  },
+  "private": true
+}

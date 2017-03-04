@@ -1,9 +1,0 @@
-<div class="panel{{ dark|default(false) ? ' panel-dark' }}{{ color is defined and color is not empty ? ' panel-' ~ color }}">
-    <div class="panel-heading">
-        <span class="panel-title">{% block title '' %}</span>
-        <div class="panel-heading-controls">
-            {% block controls '' %}
-        </div>
-    </div>
-    {% block content '' %}
-</div>

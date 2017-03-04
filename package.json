@@ -1,0 +1,19 @@
+{
+  "name": "startupvillage",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "blueimp-canvas-to-blob": "^3.6.0",
+    "bower": "^1.7.9",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-cssnano": "^2.1.1",
+    "gulp-livereload": "^3.8.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.2.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.11",
+    "merge-stream": "^1.0.1",
+    "object-fit-images": "^2.5.9"
+  }
+}
