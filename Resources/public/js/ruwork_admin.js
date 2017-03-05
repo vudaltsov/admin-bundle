@@ -23,5 +23,7 @@
 
     $('#px-nav').pxNav()
     $('#px-footer').pxFooter()
+
     $('select').select2()
+    $('textarea').autosize()
 })(document, window.jQuery)
