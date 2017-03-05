@@ -1,28 +1,27 @@
 'use strict';
 
 (function (document, $) {
-    $('#px-nav').pxNav()
-    $('#px-footer').pxFooter()
-
-    $.fn.select2.defaults.set('language', app.locale)
-    $('select').select2()
-
-    $('.datepicker-control').datepicker({
-        format: 'yyyy-mm-dd',
-        startView: 0,
-        maxViewMode: 2,
-        todayBtn: 'linked',
+    $.extend($.fn.datepicker.defaults, {
         language: app.locale,
-        daysOfWeekHighlighted: '0,6',
-        orientation: 'bottom auto',
+        orientation: 'top auto',
+        todayBtn: 'linked',
         autoclose: true,
-        todayHighlight: true,
-        zIndexOffset: 999999
+        zIndexOffset: 999999,
+        maxViewMode: 2,
+        todayHighlight: true
     })
 
-    $('.markdown-control').markdown({
+    $.extend($.fn.markdown.defaults, {
         iconlibrary: 'fa',
         hiddenButtons: ['cmdImage'],
         language: app.locale
     })
+
+    $.extend($.fn.select2.defaults, {
+        language: app.locale
+    })
+
+    $('#px-nav').pxNav()
+    $('#px-footer').pxFooter()
+    $('select').select2()
 })(document, window.jQuery)

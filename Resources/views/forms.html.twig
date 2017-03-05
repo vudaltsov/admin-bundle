@@ -57,7 +57,9 @@
 {%- endblock -%}
 
 {% block choice_widget_collapsed %}
-    {% set attr = attr|merge({'data-placeholder': placeholder|default('Выберите')}) %}
+    {% set attr = attr|merge({
+    'data-placeholder': placeholder|default('Выберите')
+    }) %}
     {{ parent() }}
 {% endblock %}
 
@@ -71,11 +73,16 @@
 
 {% block calendar_widget %}
     {% set type = 'text' %}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' datepicker-control')|trim}) %}
+    {% set attr = attr|merge({
+    'data-provide': 'datepicker',
+    'data-date-format': 'yyyy-mm-dd'
+    }) %}
     {{- block('form_widget_simple') -}}
 {% endblock %}
 
 {% block markdown_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' markdown-control')|trim}) %}
+    {% set attr = attr|merge({
+    'data-provide': 'markdown',
+    }) %}
     {{- block('textarea_widget') -}}
 {%- endblock %}
