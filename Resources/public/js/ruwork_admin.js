@@ -19,4 +19,10 @@
         todayHighlight: true,
         zIndexOffset: 999999
     })
+
+    $('.markdown-control').markdown({
+        iconlibrary: 'fa',
+        hiddenButtons: ['cmdImage'],
+        language: app.locale
+    })
 })(document, window.jQuery)

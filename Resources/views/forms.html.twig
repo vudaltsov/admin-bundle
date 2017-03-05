@@ -61,16 +61,21 @@
     {{ parent() }}
 {% endblock %}
 
-{% block calendar_widget %}
-    {% set type = 'text' %}
-    {% set attr = attr|merge({class: (attr.class|default('') ~ ' datepicker-control')|trim}) %}
-    {{- block('form_widget_simple') -}}
-{% endblock %}
-
 {% block file_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-file-input')|trim}) %}
     <label class="custom-file">
         {{- block('form_widget_simple') -}}
         <span class="custom-file-control form-control">Файл не выбран</span>
     </label>
+{%- endblock %}
+
+{% block calendar_widget %}
+    {% set type = 'text' %}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' datepicker-control')|trim}) %}
+    {{- block('form_widget_simple') -}}
+{% endblock %}
+
+{% block markdown_widget -%}
+    {% set attr = attr|merge({class: (attr.class|default('') ~ ' markdown-control')|trim}) %}
+    {{- block('textarea_widget') -}}
 {%- endblock %}
