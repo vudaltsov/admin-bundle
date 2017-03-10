@@ -1,0 +1,17 @@
+.ruwidget {
+  position: relative;
+  display: block;
+}
+
+.ruwidget-ajax-process {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    opacity: .5;
+  }
+}

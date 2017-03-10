@@ -18,10 +18,7 @@ gulp.task('scss', function () {
         .pipe(sourcemaps.init())
         .pipe(sass())
         .on('error', suppressError)
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions', 'ie >= 9'],
-            flexbox: 'no-2009'
-        }))
+        .pipe(autoprefixer())
         .pipe(cssnano({zindex: false}))
         .pipe(sourcemaps.write())
         .pipe(rename({suffix: '.min'}))

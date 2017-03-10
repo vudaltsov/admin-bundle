@@ -1,12 +1,21 @@
 'use strict';
 
-(function (document, $) {
+(function ($) {
+    var $document = $(document)
+
+    var initElementPlugins = function ($context) {
+        $('select', $context).select2()
+        $('textarea', $context).autosize()
+        $('[data-provide="datepicker"]', $context).datepicker()
+        $('[data-provide="markdown"]', $context).markdown()
+        $('[data-provide="ruwidget"]', $context).ruwidget()
+    }
+
     $.extend($.fn.datepicker.defaults, {
         language: app.locale,
         orientation: 'top auto',
         todayBtn: 'linked',
         autoclose: true,
-        zIndexOffset: 999999,
         maxViewMode: 2,
         todayHighlight: true
     })
@@ -21,9 +30,15 @@
         language: app.locale
     })
 
-    $('#px-nav').pxNav()
-    $('#px-footer').pxFooter()
+    $.extend($.fn.ruwidget.defaults, {
+        onAjaxSuccess: function ($widget) {
+            initElementPlugins($widget)
+        }
+    })
 
-    $('select').select2()
-    $('textarea').autosize()
-})(document, window.jQuery)
+    $document.ready(function () {
+        $('#px-nav', $document).pxNav()
+        $('#px-footer', $document).pxFooter()
+        initElementPlugins($document)
+    })
+})(window.jQuery)
