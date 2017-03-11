@@ -1,6 +1,8 @@
 {% block before '' %}
 <div class="panel {{- theme is defined ? ' panel-' ~ theme }} {{- dark|default(true) ? ' panel-dark' }} {{- colorful|default(false) ? ' panel-body-colorful' }}">
-    {% set block_title, block_controls, block_footer = block('title'), block('controls'), block('footer') %}
+    {% set block_title %}{% block title '' %}{% endset %}
+    {% set block_controls %}{% block controls '' %}{% endset %}
+    {% set block_footer %}{% block footer '' %}{% endset %}
     {% if block_title or block_controls %}
         <div class="panel-heading">
             <span class="panel-title">{{ block_title|raw }}</span>
