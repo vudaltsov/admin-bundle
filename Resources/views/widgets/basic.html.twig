@@ -1,4 +1,3 @@
-{% trans_default_domain 'admin' %}
 {% block before '' %}
 <div class="panel {{- theme is defined ? ' panel-' ~ theme }} {{- dark|default(true) ? ' panel-dark' }} {{- colorful|default(false) ? ' panel-body-colorful' }}">
     {% set block_title, block_controls, block_footer = block('title'), block('controls'), block('footer') %}
