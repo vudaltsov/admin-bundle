@@ -4,13 +4,13 @@
     <div class="table-responsive">{{ block('body') }}</div>
 {% endblock %}
 
-{% macro img(src, href = null, width = 100) %}
+{% macro img(src, href = null, title = '', width = 100) %}
     {% if href is not null %}
-        <a href="{{ href }}">
+        <a href="{{ href }}" title="{{ title }}">
             <img src="{{ src }}" alt="" style="max-width: {{ width }}px;">
         </a>
     {% else %}
-        <img src="{{ src }}" alt="" style="max-width: {{ width }}px;">
+        <img src="{{ src }}" style="max-width: {{ width }}px;" title="{{ title }}" alt="">
     {% endif %}
 {% endmacro %}
 
