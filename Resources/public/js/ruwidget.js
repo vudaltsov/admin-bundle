@@ -47,7 +47,6 @@
             .ajax({
                 url: this.options.url,
                 type: method || 'get',
-                cache: false,
                 dataType: 'html',
                 data: data,
                 contentType: false,
