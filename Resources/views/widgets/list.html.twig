@@ -1,8 +1,8 @@
-{% extends '@RuworkAdmin/widgets/basic.html.twig' %}
+{% extends '@RuworkAdmin/widgets/table.html.twig' %}
 
 {% block body_container %}
     {% if length|default(items|default([])|length) %}
-        <div class="table-responsive">{{ block('body') }}</div>
+        {{ parent() }}
     {% else %}
         <div class="px-block-alerts">
             <div class="alert alert-info">
@@ -11,25 +11,3 @@
         </div>
     {% endif %}
 {% endblock %}
-
-{% macro img(src, href = null, width = 100) %}
-    {% if href is not null %}
-        <a href="{{ href }}">
-            <img src="{{ src }}" alt="" style="max-width: {{ width }}px;">
-        </a>
-    {% else %}
-        <img src="{{ src }}" alt="" style="max-width: {{ width }}px;">
-    {% endif %}
-{% endmacro %}
-
-{% macro btn_edit(href, title = 'Редактировать') %}
-    <a class="btn btn-xs btn-default btn-rounded" href="{{ href }}" title="{{ title }}">
-        <i class="fa fa-pencil"></i>
-    </a>
-{% endmacro %}
-
-{% macro btn_public(href, title = 'Открыть в публичной части в новом окне') %}
-    <a class="btn btn-xs btn-default btn-rounded" href="{{ href }}" target="_blank" title="{{ title }}">
-        <i class="fa fa-eye"></i>
-    </a>
-{% endmacro %}
