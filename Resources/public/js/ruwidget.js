@@ -3,7 +3,7 @@
 
     function Ruwidget(element, options) {
         this.$element = $(element)
-        this.options = options
+        this.options = options || {}
         this.init()
     }
 
@@ -79,24 +79,24 @@
             var $this = $(this),
                 ruwidget = $this.data('ruwidget')
 
-            if (typeof method === 'undefined' || typeof method === 'object') {
-                if (!ruwidget) {
-                    var options = $.extend(true, {}, $.fn.ruwidget.defaults, $this.data('options'), method)
-                    $this.data('ruwidget', new Ruwidget(this, options))
-                } else
-                    throw new Error('Ruwidget is already initialized on this element.')
-            } else {
-                if (!ruwidget)
-                    throw new Error('Ruwidget is not initialized on this element.')
-                else if (method === 'destroy') {
-                    ruwidget.destroy()
-                    $this.data('ruwidget', null)
+            if (!ruwidget) {
+                var options = $.extend(true, {}, $.fn.ruwidget.defaults, $this.data('options'))
+
+                if (typeof method === 'object') {
+                    $.extend(true, options, method)
+                    method = null
                 }
-                else if (typeof method === 'string' && typeof ruwidget[method] !== 'undefined') {
-                    ruwidget[method].apply(ruwidget, args)
-                } else
-                    throw new Error('Wrong Ruwidget method call.')
+
+                $this.data('ruwidget', (ruwidget = new Ruwidget(this, options)))
             }
+
+            if (method === 'destroy') {
+                ruwidget.destroy()
+                $this.data('ruwidget', null)
+            } else if (typeof method === 'string' && typeof ruwidget[method] !== 'undefined') {
+                ruwidget[method].apply(ruwidget, args)
+            } else if (method)
+                throw new Error('Wrong Ruwidget method call.')
         })
     }
 
