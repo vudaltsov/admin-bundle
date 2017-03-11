@@ -1,0 +1,22 @@
+{% trans_default_domain 'admin' %}
+{% block before '' %}
+<div class="panel {{- theme is defined ? ' panel-' ~ theme }} {{- dark|default(true) ? ' panel-dark' }} {{- colorful|default(false) ? ' panel-body-colorful' }}">
+    {% set block_title, block_controls, block_footer = block('title'), block('controls'), block('footer') %}
+    {% if block_title or block_controls %}
+        <div class="panel-heading">
+            <span class="panel-title">{{ block_title|raw }}</span>
+            <div class="panel-heading-controls">{{ block_controls|raw }}</div>
+        </div>
+    {% endif %}
+    {% block body_container %}
+        <div class="panel-body">
+            {% block body '' %}
+        </div>
+    {% endblock %}
+    {% if block_footer %}
+        <div class="panel-footer {{- sticky|default(true) ? ' panel-footer-sticky' }}">
+            {{ block_footer|raw }}
+        </div>
+    {% endif %}
+</div>
+{% block after '' %}
