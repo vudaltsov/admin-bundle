@@ -58,7 +58,7 @@
 
 {% block choice_widget_collapsed %}
     {% set attr = attr|merge({
-    'data-placeholder': placeholder|default('Выберите')
+    'data-placeholder': placeholder != '' ? (translation_domain is same as(false) ? placeholder : placeholder|trans({}, translation_domain))
     }) %}
     {{ parent() }}
 {% endblock %}
