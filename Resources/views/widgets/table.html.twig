@@ -27,19 +27,3 @@
         </div>
     {% endif %}
 </div>
-
-{% macro link(href, title) %}
-    <a class="btn btn-xs btn-default btn-rounded" href="{{ href }}">{{ title }}</a>
-{% endmacro %}
-
-{% macro link_icon(href, icon, title = '') %}
-    <a class="btn btn-xs btn-default btn-rounded" href="{{ href }}" title="{{ title }}">
-        <i class="fa fa-{{ icon }}"></i>
-    </a>
-{% endmacro %}
-
-{% macro link_img(href, src, title = '') %}
-    <a href="{{ href }}" title="{{ title }}">
-        <img class="img-responsive" src="{{ src }}" alt="{{ title }}">
-    </a>
-{% endmacro %}
