@@ -1,7 +1,7 @@
 {% set dark = dark ?? true -%}
 {% set colorful = colorful ?? false -%}
 {% set heading = heading ?? true -%}
-{% set footer = footer ?? true -%}
+{% set footer = footer ?? false -%}
 {% set sticky = sticky ?? true -%}
 <div class="panel {{- theme is defined ? ' panel-' ~ theme }} {{- dark ? ' panel-dark' }} {{- colorful ? ' panel-body-colorful' }}">
     {% if heading %}
