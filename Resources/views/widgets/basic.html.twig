@@ -1,23 +1,21 @@
-{% block before '' %}
-<div class="panel {{- theme is defined ? ' panel-' ~ theme }} {{- dark|default(true) ? ' panel-dark' }} {{- colorful|default(false) ? ' panel-body-colorful' }}">
-    {% set block_title %}{% block title '' %}{% endset %}
-    {% set block_controls %}{% block controls '' %}{% endset %}
-    {% set block_footer %}{% block footer '' %}{% endset %}
-    {% if block_title or block_controls %}
+{% set dark = dark ?? true -%}
+{% set colorful = colorful ?? false -%}
+{% set heading = heading ?? true -%}
+{% set footer = footer ?? true -%}
+{% set sticky = sticky ?? true -%}
+<div class="panel {{- theme is defined ? ' panel-' ~ theme }} {{- dark ? ' panel-dark' }} {{- colorful ? ' panel-body-colorful' }}">
+    {% if heading %}
         <div class="panel-heading">
-            <span class="panel-title">{{ block_title|raw }}</span>
-            <div class="panel-heading-controls">{{ block_controls|raw }}</div>
+            <span class="panel-title">{% block title '' %}</span>
+            <div class="panel-heading-controls">{% block controls '' %}</div>
         </div>
     {% endif %}
-    {% block body_container %}
-        <div class="panel-body">
-            {% block body '' %}
-        </div>
-    {% endblock %}
-    {% if block_footer %}
-        <div class="panel-footer {{- sticky|default(true) ? ' panel-footer-sticky' }}">
-            {{ block_footer|raw }}
+    <div class="panel-body">
+        {% block body '' %}
+    </div>
+    {% if footer %}
+        <div class="panel-footer {{- sticky ? ' panel-footer-sticky' }}">
+            {% block footer '' %}
         </div>
     {% endif %}
 </div>
-{% block after '' %}

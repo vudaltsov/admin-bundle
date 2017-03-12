@@ -1,13 +1,26 @@
-{% extends '@RuworkAdmin/widgets/basic.html.twig' %}
-
-{% form_theme form form_theme|default('@RuworkAdmin/forms.html.twig') %}
-
-{% block before form_start(form, {attr: {novalidate: true}}) %}
-
-{% block body form_rest(form) %}
-
-{% block footer %}
-    <button class="btn btn-primary">Sumbit</button>
-{% endblock %}
-
-{% block after form_end(form) %}
+{% set dark = dark ?? true -%}
+{% set colorful = colorful ?? false -%}
+{% set heading = heading ?? true -%}
+{% set footer = footer ?? true -%}
+{% set sticky = sticky ?? true -%}
+{% form_theme form form_theme|default('@RuworkAdmin/forms.html.twig') -%}
+{{ form_start(form) }}
+<div class="panel {{- theme is defined ? ' panel-' ~ theme }} {{- dark ? ' panel-dark' }} {{- colorful ? ' panel-body-colorful' }}">
+    {% if heading %}
+        <div class="panel-heading">
+            <span class="panel-title">{% block title '' %}</span>
+            <div class="panel-heading-controls">{% block controls '' %}</div>
+        </div>
+    {% endif %}
+    <div class="panel-body">
+        {% block body form_rest(form) %}
+    </div>
+    {% if footer %}
+        <div class="panel-footer {{- sticky ? ' panel-footer-sticky' }}">
+            {% block footer %}
+                <button class="btn btn-primary" type="submit">Сохранить</button>
+            {% endblock %}
+        </div>
+    {% endif %}
+</div>
+{{ form_end(form) }}
