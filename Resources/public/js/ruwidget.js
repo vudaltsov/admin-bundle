@@ -56,14 +56,14 @@
                 processData: false,
                 beforeSend: function () {
                     _this.$element
-                        .height(_this.$element.height())
                         .addClass(_this.options.classes.ajaxProcess)
+                        .height(_this.$element.height())
                 }
             })
             .always(function () {
                 _this.$element
-                    .height('')
                     .removeClass(_this.options.classes.ajaxProcess)
+                    .height('')
             })
             .done(function (data) {
                 _this.$element.html(data)
