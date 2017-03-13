@@ -7,6 +7,10 @@
         this.init()
     }
 
+    Ruwidget.prototype.options = function (options) {
+        $.extend(true, this.options, options)
+    }
+
     Ruwidget.prototype.init = function () {
         if (this.options.autoload) {
             this.load()
@@ -15,24 +19,18 @@
         this.$element.addClass(this.options.classes.widget)
     }
 
+    Ruwidget.prototype.destroy = function () {
+        this.$element.removeClass(this.options.classes.widget)
+    }
+
     Ruwidget.prototype.attachEvents = function () {
         var _this = this
 
         this.$element.find('form').on('submit', function (event) {
             event.preventDefault()
 
-            var $form = $(this)
-
-            _this.ajax($form.serialize(), $form.prop('method'))
+            _this.ajaxSubmit($(this))
         })
-    }
-
-    Ruwidget.prototype.destroy = function () {
-        this.$element.removeClass(this.options.classes.widget)
-    }
-
-    Ruwidget.prototype.options = function (options) {
-        $.extend(true, this.options, options)
     }
 
     Ruwidget.prototype.load = function () {
@@ -43,30 +41,76 @@
         this.load()
     }
 
-    Ruwidget.prototype.ajax = function (data, method) {
+    Ruwidget.prototype.ajaxBeforeSend = function () {
+        this.$element
+            .addClass(this.options.classes.ajaxPending)
+            .height(this.$element.height())
+        this.options.onAjaxBeforeSend.apply(null, $.merge([this.$element], arguments))
+    }
+
+    Ruwidget.prototype.ajaxAlways = function () {
+        this.$element
+            .removeClass(this.options.classes.ajaxPending)
+            .height('')
+        this.options.onAjaxAlways.apply(null, $.merge([this.$element], arguments))
+    }
+
+    Ruwidget.prototype.ajaxDone = function (data) {
+        this.$element
+            .addClass(this.options.classes.ajaxSuccess)
+            .html(data)
+        this.options.onAjaxDone.apply(null, $.merge([this.$element], arguments))
+        this.attachEvents()
+    }
+
+    Ruwidget.prototype.ajaxFail = function () {
+        this.$element
+            .addClass(this.options.classes.ajaxError)
+        this.options.onAjaxFail.apply(null, $.merge([this.$element], arguments))
+    }
+
+    Ruwidget.prototype.ajax = function () {
         var _this = this
 
         $
             .ajax({
                 url: this.options.url,
-                type: method || 'get',
                 dataType: 'html',
-                data: data,
                 beforeSend: function () {
-                    _this.$element
-                        .addClass(_this.options.classes.ajaxProcess)
-                        .height(_this.$element.height())
+                    _this.ajaxBeforeSend.apply(_this, arguments)
                 }
             })
             .always(function () {
-                _this.$element
-                    .removeClass(_this.options.classes.ajaxProcess)
-                    .height('')
+                _this.ajaxAlways.apply(_this, arguments)
             })
-            .done(function (data) {
-                _this.$element.html(data)
-                _this.options.onAjaxSuccess(_this.$element)
-                _this.attachEvents()
+            .done(function () {
+                _this.ajaxDone.apply(_this, arguments)
+            })
+            .fail(function () {
+                _this.ajaxFail.apply(_this, arguments)
+            })
+    }
+
+    Ruwidget.prototype.ajaxSubmit = function ($form) {
+        var _this = this
+
+        $form
+            .ajaxSubmit({
+                url: this.options.url,
+                dataType: 'html',
+                beforeSubmit: function () {
+                    _this.ajaxBeforeSend.apply(_this, arguments)
+                }
+            })
+            .data('jqxhr')
+            .always(function () {
+                _this.ajaxAlways.apply(_this, arguments)
+            })
+            .done(function () {
+                _this.ajaxDone.apply(_this, arguments)
+            })
+            .fail(function () {
+                _this.ajaxFail.apply(_this, arguments)
             })
     }
 
@@ -104,12 +148,18 @@
     $.fn.ruwidget.defaults = {
         classes: {
             widget: 'ruwidget',
-            ajaxProcess: 'ruwidget-ajax-process',
+            ajaxPending: 'ruwidget-ajax-pending',
             ajaxSuccess: 'ruwidget-ajax-success',
-            ajaxFail: 'ruwidget-ajax-fail'
+            ajaxError: 'ruwidget-ajax-error'
         },
         autoload: true,
-        onAjaxSuccess: function () {
+        onAjaxBeforeSend: function () {
+        },
+        onAjaxAlways: function () {
+        },
+        onAjaxDone: function () {
+        },
+        onAjaxFail: function () {
         }
     }
 

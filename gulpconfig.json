@@ -16,7 +16,8 @@
             "bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js",
             "bower_components/open-sans-fontface/fonts/*/**.*",
             "bower_components/open-sans-fontface/open-sans.css",
-            "bower_components/bootstrap-markdown/locale/bootstrap-markdown.ru.js"
+            "bower_components/bootstrap-markdown/locale/bootstrap-markdown.ru.js",
+            "bower_components/jquery-form/dist/jquery.form.min.js"
         ]
     },
     "watch": {

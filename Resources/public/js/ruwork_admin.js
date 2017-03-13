@@ -36,7 +36,7 @@
     })
 
     $.extend($.fn.ruwidget.defaults, {
-        onAjaxSuccess: function ($widget) {
+        onAjaxDone: function ($widget) {
             initElementPlugins($widget)
         }
     })
