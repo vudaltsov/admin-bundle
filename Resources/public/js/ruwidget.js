@@ -23,12 +23,7 @@
 
             var $form = $(this)
 
-            var method = $form.prop('method'),
-                data = (method === 'post' && typeof window.FormData !== 'undefined')
-                    ? new FormData($form[0])
-                    : $form.serialize()
-
-            _this.ajax(data, method)
+            _this.ajax($form.serialize(), $form.prop('method'))
         })
     }
 
