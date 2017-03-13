@@ -7,7 +7,11 @@
     {% if heading %}
         <div class="panel-heading">
             <span class="panel-title">{% block title '' %}</span>
-            <div class="panel-heading-controls">{% block controls '' %}</div>
+            <div class="panel-heading-controls">
+                {% block controls %}
+                    <button class="btn btn-xs btn-outline" data-ruwidget="reload"><i class="fa fa-refresh"></i></button>
+                {% endblock %}
+            </div>
         </div>
     {% endif %}
     {% if length is defined and length is same as(0) %}
