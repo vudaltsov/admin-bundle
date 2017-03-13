@@ -6,6 +6,7 @@
     var initElementPlugins = function ($context) {
         $('select', $context).select2()
         $('textarea', $context).autosize()
+        $('.px-file', $context).pxFile()
         $('[data-provide="datepicker"]', $context).datepicker()
         $('[data-provide="markdown"]', $context).markdown()
         $('[data-provide="ruwidget"]', $context).ruwidget()

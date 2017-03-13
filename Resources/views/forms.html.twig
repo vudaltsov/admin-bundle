@@ -65,9 +65,13 @@
 
 {% block file_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-file-input')|trim}) %}
-    <label class="custom-file">
-        {{- block('form_widget_simple') -}}
+    <label class="custom-file px-file">
+        {{ block('form_widget_simple') }}
         <span class="custom-file-control form-control">Файл не выбран</span>
+        <span class="px-file-buttons">
+            <button type="button" class="btn px-file-clear">Очистить</button>
+            <button type="button" class="btn btn-primary px-file-browse">Выбрать файл</button>
+        </span>
     </label>
 {%- endblock %}
 
