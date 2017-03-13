@@ -12,22 +12,14 @@
   z-index: 1;
 }
 
-.panel-flash-success {
-  animation: panel-flash-success 5s 1;
-}
-
-@keyframes panel-flash-success {
-  0% {
-    border-color: #78bd5d;
+@each $theme, $color in (primary: $brand-primary, success: $brand-success, danger: $brand-danger, warning: $brand-warning, info: $brand-info) {
+  .panel-flash-#{$theme} {
+    animation: panel-flash-#{$theme} 5s 1;
   }
-}
 
-.panel-flash-danger {
-  animation: panel-flash-danger 5s 1;
-}
-
-@keyframes panel-flash-danger {
-  0% {
-    border-color: #e46050;
+  @keyframes panel-flash-#{$theme} {
+    0% {
+      border-color: $color;
+    }
   }
 }

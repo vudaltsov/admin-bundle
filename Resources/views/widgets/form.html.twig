@@ -1,10 +1,10 @@
 {% set theme = theme ?? null -%}
 {% set dark = dark ?? true -%}
 {% set colorful = colorful ?? false -%}
+{% set flash = flash ?? (form.vars.submitted ? (form.vars.valid ? 'success' : 'danger') : null) %}
 {% set heading = heading ?? true -%}
 {% set footer = footer ?? true -%}
 {% set sticky = sticky ?? true -%}
-{% set flash = flash ?? (form.vars.submitted ? (form.vars.valid ? 'success' : 'danger') : null) %}
 {% form_theme form form_theme|default('@RuworkAdmin/forms.html.twig') -%}
 {{ form_start(form) }}
 <div class="panel {{- theme ? ' panel-' ~ theme }} {{- dark ? ' panel-dark' }} {{- colorful ? ' panel-body-colorful' }} {{- flash ? ' panel-flash-' ~ flash }}">
@@ -13,7 +13,7 @@
             <span class="panel-title">{% block title '' %}</span>
             <div class="panel-heading-controls">
                 {% block controls %}
-                    <button class="btn btn-xs btn-secondary" data-ruwidget="reload"><i class="fa fa-refresh"></i></button>
+                    <button class="btn btn-xs btn-outline" data-ruwidget="reload"><i class="fa fa-refresh"></i></button>
                 {% endblock %}
             </div>
         </div>
