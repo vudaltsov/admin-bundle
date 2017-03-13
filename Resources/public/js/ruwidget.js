@@ -52,8 +52,6 @@
                 type: method || 'get',
                 dataType: 'html',
                 data: data,
-                contentType: false,
-                processData: false,
                 beforeSend: function () {
                     _this.$element
                         .addClass(_this.options.classes.ajaxProcess)
