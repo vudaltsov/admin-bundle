@@ -2,20 +2,16 @@
 {% set dark = dark ?? true -%}
 {% set colorful = colorful ?? false -%}
 {% set flash = flash ?? null %}
-{% set heading = heading ?? true -%}
-{% set footer = footer ?? true -%}
 {% set sticky = sticky ?? true -%}
 <div class="panel {{- theme ? ' panel-' ~ theme }} {{- dark ? ' panel-dark' }} {{- colorful ? ' panel-body-colorful' }} {{- flash ? ' panel-flash-' ~ flash }}">
-    {% if heading %}
-        <div class="panel-heading">
-            <span class="panel-title">{% block title '' %}</span>
-            <div class="panel-heading-controls">
-                {% block controls %}
-                    <button class="btn btn-xs btn-outline" data-ruwidget="reload"><i class="fa fa-refresh"></i></button>
-                {% endblock %}
-            </div>
+    <div class="panel-heading">
+        <span class="panel-title">{% block title '&nbsp;' %}</span>
+        <div class="panel-heading-controls">
+            {% block controls %}
+                <button class="btn btn-xs btn-outline" data-ruwidget="reload"><i class="fa fa-refresh"></i></button>
+            {% endblock %}
         </div>
-    {% endif %}
+    </div>
     {% if length is defined and length is same as(0) %}
         <div class="px-block-alerts">
             <div class="alert alert-info">
@@ -27,9 +23,8 @@
             {% block table '' %}
         </div>
     {% endif %}
-    {% if footer %}
-        <div class="panel-footer {{- sticky ? ' panel-footer-sticky' }}">
-            {% block footer '' %}
-        </div>
+    {% set footer %}{% block footer '' %}{% endset %}
+    {% if footer is not empty %}
+        <div class="panel-footer {{- sticky ? ' panel-footer-sticky' }}">{{ footer|raw }}</div>
     {% endif %}
 </div>
