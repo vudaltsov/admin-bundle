@@ -11,3 +11,23 @@
   bottom: 0;
   z-index: 1;
 }
+
+.panel-flash-success {
+  animation: panel-flash-success 5s 1;
+}
+
+@keyframes panel-flash-success {
+  0% {
+    border-color: #78bd5d;
+  }
+}
+
+.panel-flash-danger {
+  animation: panel-flash-danger 5s 1;
+}
+
+@keyframes panel-flash-danger {
+  0% {
+    border-color: #e46050;
+  }
+}
