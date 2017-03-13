@@ -51,8 +51,13 @@
     Ruwidget.prototype.ajaxAlways = function () {
         this.$element
             .removeClass(this.options.classes.ajaxPending)
-            .height('')
         this.options.onAjaxAlways.apply(null, $.merge([this.$element], arguments))
+
+        var _this = this
+
+        setTimeout(function () {
+            _this.$element.height('')
+        }, 1)
     }
 
     Ruwidget.prototype.ajaxDone = function (data) {
