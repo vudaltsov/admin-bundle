@@ -9,6 +9,11 @@
         $('[data-provide="datepicker"]', $context).datepicker()
         $('[data-provide="markdown"]', $context).markdown()
         $('[data-provide="ruwidget"]', $context).ruwidget()
+        $('[data-ruwidget="reload"]', $context).click(function (event) {
+            event.preventDefault()
+
+            $(this).closest('[data-provide="ruwidget"]').ruwidget('reload')
+        })
     }
 
     $.extend($.fn.datepicker.defaults, {
