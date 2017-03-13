@@ -24,7 +24,7 @@
     {% if footer %}
         <div class="panel-footer {{- sticky ? ' panel-footer-sticky' }}">
             {% block footer %}
-                <button class="btn btn-primary" type="submit">Сохранить</button>
+                <button class="btn btn-primary" type="submit">{% block button 'Сохранить' %}</button>
             {% endblock %}
         </div>
     {% endif %}
