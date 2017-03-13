@@ -9,7 +9,7 @@
 
     Ruwidget.prototype.init = function () {
         if (this.options.autoload) {
-            this.ajax()
+            this.load()
         }
 
         this.$element.addClass(this.options.classes.widget)
@@ -38,6 +38,14 @@
 
     Ruwidget.prototype.options = function (options) {
         $.extend(true, this.options, options)
+    }
+
+    Ruwidget.prototype.load = function () {
+        this.ajax()
+    }
+
+    Ruwidget.prototype.reload = function () {
+        this.load()
     }
 
     Ruwidget.prototype.ajax = function (data, method) {
