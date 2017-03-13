@@ -2,7 +2,6 @@
 {% set dark = dark ?? true -%}
 {% set colorful = colorful ?? false -%}
 {% set flash = flash ?? null %}
-{% set sticky = sticky ?? true -%}
 <div class="panel {{- theme ? ' panel-' ~ theme }} {{- dark ? ' panel-dark' }} {{- colorful ? ' panel-body-colorful' }} {{- flash ? ' panel-flash-' ~ flash }}">
     <div class="panel-heading">
         <span class="panel-title">{% block title '&nbsp;' %}</span>
@@ -17,6 +16,6 @@
     </div>
     {% set footer %}{% block footer '' %}{% endset %}
     {% if footer is not empty %}
-        <div class="panel-footer {{- sticky ? ' panel-footer-sticky' }}">{{ footer|raw }}</div>
+        <div class="panel-footer sticky-bottom">{{ footer|raw }}</div>
     {% endif %}
 </div>

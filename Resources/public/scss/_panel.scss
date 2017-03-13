@@ -6,10 +6,11 @@
   }
 }
 
-.panel-footer-sticky {
-  position: sticky;
-  bottom: 0;
-  z-index: 1;
+.panel-filter {
+  padding: 15px 20px;
+  margin-bottom: -1px;
+  background-color: lighten($brand-warning, 37%);
+  border-bottom: 1px solid rgba(0, 0, 0, .05);
 }
 
 @each $theme, $color in (primary: $brand-primary, success: $brand-success, danger: $brand-danger, warning: $brand-warning, info: $brand-info) {
