@@ -1,9 +1,14 @@
 {% use 'bootstrap_3_layout.html.twig' -%}
 
+{% block form_start -%}
+    {% if frujax is defined %}{% set attr = attr|merge({'data-frujax': frujax|json_encode}) %}{% endif -%}
+    {{ parent() -}}
+{% endblock %}
+
 {% block upload_row -%}
     {% set force_error = true -%}
     {{ block('form_row') -}}
-{% endblock upload_row -%}
+{% endblock upload_row %}
 
 {% block checkbox_widget -%}
     {% set attr = attr|merge({class: (attr.class|default('') ~ ' custom-control-input')|trim}) -%}

@@ -9,11 +9,19 @@
         $('.px-file', $context).pxFile()
         $('[data-provide="datepicker"]', $context).datepicker()
         $('[data-provide="markdown"]', $context).markdown()
-        $('[data-provide="ruwidget"]', $context).ruwidget()
-        $('[data-ruwidget="reload"]', $context).click(function (event) {
+        $('[data-ruwidget]', $context).each(function () {
+            var $element = $(this)
+            $element.frujax($.extend({
+                autoload: true,
+                onDone: function (jqXHR, textStatus, options, $data) {
+                    this.html($data)
+                }
+            }, $element.data('ruwidget')))
+        })
+        $('[data-ruwidget-reload]', $context).click(function (event) {
             event.preventDefault()
 
-            $(this).closest('[data-provide="ruwidget"]').ruwidget('reload')
+            $(this).closest('[data-ruwidget]').frujax('fire')
         })
     }
 
@@ -36,15 +44,14 @@
         language: app.locale
     })
 
-    $.extend($.fn.ruwidget.defaults, {
-        onAjaxDone: function ($widget) {
-            initElementPlugins($widget)
-        }
-    })
+    $document
+        .ready(function () {
+            $('#px-nav', $document).pxNav()
+            $('#px-footer', $document).pxFooter()
 
-    $document.ready(function () {
-        $('#px-nav', $document).pxNav()
-        $('#px-footer', $document).pxFooter()
-        initElementPlugins($document)
-    })
+            initElementPlugins($document)
+        })
+        .on('done.frujax.global', function (event, $element, jqXHR, textStatus, options, $data) {
+            initElementPlugins($data)
+        })
 })(window.jQuery)

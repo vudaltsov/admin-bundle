@@ -7,7 +7,7 @@
         <span class="panel-title">{% block title '&nbsp;' %}</span>
         <div class="panel-heading-controls">
             {% block controls %}
-                <button class="btn btn-xs btn-outline" data-ruwidget="reload"><i class="fa fa-refresh"></i></button>
+                <button class="btn btn-xs btn-outline" data-ruwidget-reload><i class="fa fa-refresh"></i></button>
             {% endblock %}
         </div>
     </div>
@@ -18,7 +18,7 @@
                 {{ form_start(filter) }}
                 {{ form_rest(filter) }}
                 <button type="submit" class="btn btn-primary">Фильтровать</button>
-                <button class="btn" data-ruwidget="reload">Очистить</button>
+                <button class="btn" data-ruwidget-reload>Очистить</button>
                 {{ form_end(filter) }}
             {% endblock %}
         </div>
