@@ -17,7 +17,8 @@
         "symfony/config": "^3.0",
         "symfony/yaml": "^3.0",
         "symfony/dependency-injection": "^3.0",
-        "ruvents/frujax-bundle": "dev-master"
+        "ruvents/frujax-bundle": "0.0.2",
+        "javiereguiluz/easyadmin-bundle": "^1.16"
     },
     "autoload": {
         "psr-4": {
