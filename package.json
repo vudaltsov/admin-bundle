@@ -1,7 +1,7 @@
 {
-  "name": "ruwork-admin-bundle",
+  "name": "ruvents-admin-bundle",
   "license": "MIT",
-  "dependencies": {
+  "devDependencies": {
     "bootstrap-markdown": "^2.10.0",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",

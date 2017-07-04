@@ -1,6 +1,6 @@
 <?php
 
-namespace Ruwork\AdminBundle\Form\Type;
+namespace Ruvents\AdminBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

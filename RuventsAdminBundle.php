@@ -1,10 +1,10 @@
 <?php
 
-namespace Ruwork\AdminBundle;
+namespace Ruvents\AdminBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class RuworkAdminBundle extends Bundle
+class RuventsAdminBundle extends Bundle
 {
     /**
      * {@inheritdoc}
