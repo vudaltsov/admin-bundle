@@ -3,6 +3,7 @@
 namespace Ruvents\AdminBundle\Form\Type;
 
 use Ruvents\AdminBundle\Config\Model\Field\FormFieldConfig;
+use Ruvents\AdminBundle\Form\EventListener\AddFieldsListener;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,28 +26,7 @@ class FieldsFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** @var FormFieldConfig[] $fields */
-        $fields = $options['fields'];
-
-        foreach ($fields as $field) {
-            if ($field->requiresGranted && !$this->authChecker->isGranted($field->requiresGranted)) {
-                continue;
-            }
-
-            $child = $builder->create($field->name, $field->type, $field->options);
-
-            if ($child->getAttribute('ruvents_admin.is_group', false)) {
-                $builder->add($groupBuilder = $child);
-
-                continue;
-            }
-
-            if (!isset($groupBuilder)) {
-                $groupBuilder = $builder->add('__group0', GroupType::class)->get('__group0');
-            }
-
-            $groupBuilder->add($child);
-        }
+        $builder->addEventSubscriber(new AddFieldsListener($this->authChecker, $builder, $options['fields']));
     }
 
     /**
@@ -58,6 +38,6 @@ class FieldsFormType extends AbstractType
             ->setDefaults([
                 'fields' => [],
             ])
-            ->setAllowedTypes('fields', 'array');
+            ->setAllowedTypes('fields', FormFieldConfig::class.'[]');
     }
 }
