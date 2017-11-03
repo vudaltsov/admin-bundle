@@ -6,6 +6,14 @@
     {{ form_end(form) }}
 {% endblock %}
 
+{%- block form_rows -%}
+    {% for name, child in form %}
+        {% if not child.vars.ruvents_admin_button_group|default(false) %}
+            {{- form_row(child) -}}
+        {% endif %}
+    {% endfor %}
+{%- endblock form_rows -%}
+
 {% block file_widget -%}
     {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-file-input')|trim}) -%}
     <div>
