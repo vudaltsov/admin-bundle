@@ -48,6 +48,7 @@ class BuildMenuPass implements PassInterface
             $item->entity = $route[0];
             $item->action = $route[1];
             $item->routeParams = $data['route_params'];
+            $item->activeExpression = $data['active'];
         } elseif (isset($data['children'])) {
             $item = new ChildrenItemConfig();
             $item->children = array_map([$this, 'buildItem'], $data['children']);
