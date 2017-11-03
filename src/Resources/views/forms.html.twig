@@ -3,19 +3,6 @@
 {% block form %}
     {{ form_start(form) }}
     {{ form_widget(form, {attr: {class: 'row'}}) }}
-    {#<div class="card-overlay-wrapper sticky-bottom">
-        <div class="card">
-            <div class="card-body">
-                <div class="row">
-                    {% for button in buttons %}
-                        <div class="col-auto {{ 'ruvents_admin_delete' in button.vars.block_prefixes ? 'ml-auto' }}">
-                            {{ form_widget(button) }}
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>#}
     {{ form_end(form) }}
 {% endblock %}
 
