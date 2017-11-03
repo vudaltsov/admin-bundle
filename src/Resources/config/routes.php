@@ -6,6 +6,10 @@ use Ruvents\AdminBundle\Controller;
 
 return function (RoutingConfigurator $configurator) {
     $configurator
+        ->add('ruvents_admin', '')
+        ->controller(Controller\IndexController::class);
+
+    $configurator
         ->add('ruvents_admin_list', '/{ruvents_admin_entity}')
         ->requirements([
             'ruvents_admin_entity' => '[\w-]+',

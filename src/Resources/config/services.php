@@ -55,6 +55,7 @@ return function (ContainerConfigurator $container) {
         ->set(Config\Model\Config::class)
         ->factory([ref(Config\Manager::class), 'getConfig']);
 
+    $services->set(Controller\IndexController::class)->public();
     $services->set(Controller\ListController::class)->public();
     $services->set(Controller\CreateController::class)->public();
     $services->set(Controller\EditController::class)->public();
