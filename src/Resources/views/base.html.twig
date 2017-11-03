@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="{{ app.request.locale }}">
+<head>
+    <title>{% block title '' %}</title>
+    <meta charset="{{ _charset }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    {% block css %}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&amp;subset=cyrillic">
+        <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="{{ asset('bundles/ruventsadmin/css/app.min.css') }}">
+    {% endblock %}
+</head>
+<body>
+<aside id="aside">
+    {% block aside %}
+        {% block aside_logo %}
+            <div class="py-4 text-center">
+                <img class="d-inline-block" style="height: 2rem" src="{{ asset('bundles/ruventsadmin/img/ruvents.svg') }}">
+            </div>
+        {% endblock %}
+        {% block aside_menu %}
+            {% include '@RuventsAdmin/menu.html.twig' with {menu: ruvents_admin_config().menu} %}
+        {% endblock %}
+    {% endblock %}
+</aside>
+<main id="main">
+    {% block main '' %}
+</main>
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="{{ asset('bundles/ruventsadmin/js/app.js') }}"></script>
+    {% if app.request.clientIp is same as('127.0.0.1') and app.environment is same as('dev') %}
+    <script>
+        document.write('<script src="//{{ app.request.host }}:35729/livereload.js?snipver=1"><\/script>');
+    </script>
+    {% endif %}
+{% endblock %}
+</body>
+</html>

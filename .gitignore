@@ -1,4 +1,12 @@
 /node_modules/
+
+###> symfony/framework-bundle ###
+.env
+/public/bundles/
+/var/
 /vendor/
-/composer.lock
-/phpunit.xml
+###< symfony/framework-bundle ###
+
+###> symfony/web-server-bundle ###
+.web-server-pid
+###< symfony/web-server-bundle ###

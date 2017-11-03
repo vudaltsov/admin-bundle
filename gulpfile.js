@@ -1,8 +1,7 @@
-'use strict';
+'use strict'
 
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
-    autoprefixer = require('gulp-autoprefixer'),
     sourcemaps = require('gulp-sourcemaps'),
     cssnano = require('gulp-cssnano'),
     rename = require('gulp-rename'),
@@ -11,33 +10,54 @@ var gulp = require('gulp'),
         console.log(error.toString())
         this.emit('end')
     },
-    config = require('./gulpconfig.json')
+    postcss = require('gulp-postcss'),
+    concat = require('gulp-concat'),
+    del = require('del')
+
+gulp.task('clean', function () {
+    return del.sync([
+        'src/Resources/public/{css,js}'
+    ])
+})
 
 gulp.task('scss', function () {
-    return gulp.src(config.scss.src)
+    return gulp
+        .src('assets/scss/app.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
         .on('error', suppressError)
-        .pipe(autoprefixer())
+        .pipe(postcss([require('autoprefixer')]))
         .pipe(cssnano({zindex: false}))
         .pipe(sourcemaps.write())
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(config.scss.dest, {cwd: config.web_dir}))
+        .pipe(gulp.dest('css', {cwd: 'src/Resources/public'}))
         .pipe(livereload())
 })
 
+gulp.task('scripts', function () {
+    return gulp
+        .src([
+            'assets/scripts/!(app)*.js',
+            'assets/scripts/app.js'
+        ])
+        .pipe(concat('app.js'))
+        .pipe(gulp.dest('js', {cwd: 'src/Resources/public'}))
+})
+
 gulp.task('vendor', function () {
-    return gulp.src(config.vendor.src, {base: './'})
-        .pipe(gulp.dest(config.vendor.dest, {cwd: config.web_dir}))
+    return gulp
+        .src([], {base: './'})
+        .pipe(gulp.dest('vendor', {cwd: 'src/Resources/public'}))
 })
 
 gulp.task('watch', function () {
     livereload.listen()
 
-    gulp.watch(config.watch.scss, ['scss'])
-    gulp.watch(config.watch.reload, livereload.reload)
+    gulp.watch('assets/scss/**/*.scss', ['scss'])
+    gulp.watch('assets/scripts/**/*.js', ['scripts'])
+    //gulp.watch([], livereload.reload)
 })
 
-gulp.task('default', ['scss', 'vendor', 'watch'])
+gulp.task('default', ['clean', 'watch', 'scss', 'scripts', 'vendor'])
 
 gulp.task('build', ['scss', 'vendor'])

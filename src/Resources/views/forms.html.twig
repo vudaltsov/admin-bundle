@@ -1,0 +1,128 @@
+{% use "bootstrap_4_layout.html.twig" %}
+
+{% block form %}
+    {{ form_start(form) }}
+    {{ form_widget(form, {attr: {class: 'row'}}) }}
+    {#<div class="card-overlay-wrapper sticky-bottom">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    {% for button in buttons %}
+                        <div class="col-auto {{ 'ruvents_admin_delete' in button.vars.block_prefixes ? 'ml-auto' }}">
+                            {{ form_widget(button) }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>#}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block file_widget -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-file-input')|trim}) -%}
+    <div>
+        <label class="custom-file">
+            {{- block('form_widget_simple', 'form_div_layout.html.twig') -}}
+            <span class="custom-file-control"></span>
+        </label>
+    </div>
+{%- endblock %}
+
+{% block checkbox_widget -%}
+    {%- set attr = attr|merge({class: attr.class|default('custom-control-input')}) -%}
+    {{- form_label(form, null, { widget: block('checkbox_widget', 'bootstrap_base_layout.html.twig'), label_attr: {class: 'custom-checkbox'} }) -}}
+{%- endblock %}
+
+{% block radio_widget -%}
+    {%- set attr = attr|merge({class: attr.class|default('custom-control-input')}) -%}
+    {{- form_label(form, null, { widget: block('radio_widget', 'bootstrap_base_layout.html.twig'), label_attr: {class: 'custom-radio'} }) -}}
+{%- endblock %}
+
+{% block choice_widget_expanded -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            {{- form_widget(child, { translation_domain: choice_translation_domain }) -}}
+        {%- endfor -%}
+    </div>
+{%- endblock %}
+
+{% block choice_widget_collapsed -%}
+    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-select')|trim}) -%}
+    {{- block('choice_widget_collapsed', 'form_div_layout.html.twig') -}}
+{%- endblock %}
+
+{% block checkbox_radio_label -%}
+    {#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
+    {%- if widget is defined -%}
+        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' custom-control')|trim}) -%}
+        {%- if required -%}
+            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) -%}
+        {%- endif -%}
+        {%- if parent_label_class is defined -%}
+            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) -%}
+        {%- endif -%}
+        {%- if label is not same as(false) and label is empty -%}
+            {%- if label_format is not empty -%}
+                {%- set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+                }) -%}
+            {%- else -%}
+                {%- set label = name|humanize -%}
+            {%- endif -%}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{- widget|raw -}}
+        <span class="custom-control-indicator"></span>
+        <span class="custom-control-description">{{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}</span>
+        </label>
+    {%- endif -%}
+{%- endblock %}
+
+{% block form_row -%}
+    {%- if compound -%}
+        {%- set element = 'fieldset' -%}
+    {%- endif -%}
+    {{- parent() -}}
+{%- endblock %}
+
+{% block form_label -%}
+    {%- if compound -%}
+        {%- set element = 'legend' -%}
+        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' col-form-legend')|trim}) -%}
+    {% else %}
+        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-control-label')|trim}) -%}
+    {%- endif -%}
+    {{- block('form_label', 'bootstrap_base_layout.html.twig') -}}
+{%- endblock %}
+
+{% block ruvents_admin_group_row %}
+    {% set attr = attr|merge({class: (attr.class|default('col-12') ~ ' pb-3')|trim}) %}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="card h-100">
+            <div class="card-body">
+                {%- if form.parent is empty -%}
+                    {{ form_errors(form) }}
+                {%- endif -%}
+                {{- block('form_rows') -}}
+                {{- form_rest(form) -}}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block ruvents_admin_button_group_row %}
+    {% set attr = attr|merge({class: (attr.class|default('col-12') ~ ' card-overlay-wrapper sticky-bottom')|trim}) %}
+    <div {{ block('widget_container_attributes') }}>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    {% for button in form %}
+                        <div class="col-auto">{{ form_widget(button) }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

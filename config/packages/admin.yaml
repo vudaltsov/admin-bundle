@@ -1,0 +1,26 @@
+ruvents_admin:
+    menu:
+        -
+            title: На сайт
+            url: /
+            attributes: { target: _blank, icon: ion-home }
+        -
+            title: Пользователи
+            attributes: { icon: ion-person-stalker }
+            children:
+                - { title: Список, entity: 'user:list' }
+                - { title: Создать, entity: 'user:create' }
+    entities:
+        user:
+            class: App\Entity\User
+            list:
+                fields:
+                    - text@raw{Текст}
+            create:
+                title: Редактирование пользователя
+                fields:
+                    - text
+            edit:
+                title: Редактирование пользователя
+                fields:
+                    - text

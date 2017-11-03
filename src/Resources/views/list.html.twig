@@ -1,0 +1,51 @@
+{% extends '@RuventsAdmin/base.html.twig' %}
+
+{% use '@RuventsAdmin/list_types.html.twig' %}
+
+{% block main %}
+    <div class="card mb-3">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                {% for field in config.fields %}
+                    <th>{{ field.title|default(field.name) }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    {% for field in config.fields %}
+                        <td>
+                            {% set value = attribute(entity, field.name) %}
+                            {{ block('field_' ~ field.type) }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% set total_results = entities|length %}
+    {% set total_pages = (total_results / max_results)|round(0, 'ceil') %}
+    {% set current_page = app.request.query.int('page', 1) %}
+
+    {% set route = app.request.attributes.get('_route') %}
+    {% set route_params = app.request.attributes.get('_route_params') %}
+
+    <nav class="sticky-bottom">
+        <ul class="pagination justify-content-center">
+            {% for page in range(1, total_pages) %}
+                {% set active = page == current_page %}
+                <li class="page-item {{- active ? ' active' }}">
+                    {% if active %}
+                        <span class="page-link">{{ page }}</span>
+                    {% else %}
+                        <a class="page-link" href="{{ path(route, route_params|merge({page: page == 1 ? null : page})) }}">{{ page }}</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+{% endblock %}
