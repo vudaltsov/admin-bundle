@@ -7,6 +7,7 @@ ruvents_admin:
         -
             title: Пользователи
             attributes: { icon: ion-person-stalker }
+            active: "entity === 'user'"
             children:
                 - { title: Список, entity: 'user:list' }
                 - { title: Создать, entity: 'user:create' }
