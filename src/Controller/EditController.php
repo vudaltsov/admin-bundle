@@ -7,7 +7,6 @@ use Ruvents\AdminBundle\Form\Type\ButtonGroupType;
 use Ruvents\AdminBundle\Form\Type\DeleteType;
 use Ruvents\AdminBundle\Form\Type\FieldsFormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,33 +43,46 @@ class EditController extends AbstractController
             ->add('__buttons', ButtonGroupType::class);
 
         $buttonsBuilder = $builder->get('__buttons')
-            ->add('submit', SubmitType::class, ['attr' => ['class' => 'btn-success']]);
+            ->add('submit', SubmitType::class, [
+                'label' => 'Save and continue editing',
+                'attr' => ['class' => 'btn-success'],
+            ])
+            ->add('submit_and_list', SubmitType::class, [
+                'label' => 'Save and go to list',
+                'attr' => ['class' => 'btn-primary'],
+            ])
+            ->add('submit_and_create', SubmitType::class, [
+                'label' => 'Save and create new',
+                'attr' => ['class' => 'btn-secondary'],
+            ]);
 
         if ($entityConfig->delete->enabled) {
-            $buttonsBuilder
-                ->add('delete', DeleteType::class, [
-                    'attr' => ['class' => 'btn-danger'],
-                ]);
+            $buttonsBuilder->add('delete', DeleteType::class, ['attr' => ['class' => 'btn-danger']]);
         }
 
         $form = $builder
             ->getForm()
             ->handleRequest($request);
 
-        if ($entityConfig->delete->enabled) {
-            /** @var SubmitButton $deleteButton */
-            $deleteButton = $form->get('__buttons')->get('delete');
+        if ($this->isClicked($form->get('__buttons'), 'delete')) {
+            $manager->remove($entity);
+            $manager->flush();
 
-            if ($deleteButton->isClicked()) {
-                $manager->remove($entity);
-                // todo: redirect
-            }
+            return $this->redirectToList($entityConfig->name);
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->flush();
 
-            return $this->redirect($request->getRequestUri());
+            if ($this->isClicked($form->get('__buttons'), 'submit_and_list')) {
+                return $this->redirectToList($entityConfig->name);
+            }
+
+            if ($this->isClicked($form->get('__buttons'), 'submit_and_create')) {
+                return $this->redirectToCreate($entityConfig->name);
+            }
+
+            return $this->redirectToEdit($entityConfig->name, $entity);
         }
 
         return $this->render('@RuventsAdmin/edit.html.twig', [
