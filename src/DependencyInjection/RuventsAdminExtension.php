@@ -2,8 +2,8 @@
 
 namespace Ruvents\AdminBundle\DependencyInjection;
 
+use Ruvents\AdminBundle\Config\ConfigManager;
 use Ruvents\AdminBundle\Config\Pass\PassInterface;
-use Ruvents\AdminBundle\Config\Manager;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -19,8 +19,9 @@ class RuventsAdminExtension extends ConfigurableExtension
         (new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config')))
             ->load('services.php');
 
-        $container->findDefinition(Manager::class)
-            ->setArgument('$data', $config);
+        $container->findDefinition(ConfigManager::class)
+            ->setArgument('$data', $config)
+            ->setArgument('$debug', $config['debug']);
 
         $container->registerForAutoconfiguration(PassInterface::class)
             ->addTag('ruvents_admin.config_pass');

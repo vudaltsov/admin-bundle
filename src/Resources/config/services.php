@@ -20,11 +20,10 @@ return function (ContainerConfigurator $container) {
         ->autoconfigure();
 
     $services
-        ->set(Config\Manager::class)
+        ->set(Config\ConfigManager::class)
         ->args([
             '$cache' => ref('ruvents_admin.config.cache'),
             '$passes' => tagged('ruvents_admin.config_pass'),
-            '$debug' => '%kernel.debug%',
         ]);
 
     $services
@@ -53,7 +52,7 @@ return function (ContainerConfigurator $container) {
 
     $services
         ->set(Config\Model\Config::class)
-        ->factory([ref(Config\Manager::class), 'getConfig']);
+        ->factory([ref(Config\ConfigManager::class), 'getConfig']);
 
     $services->set(Controller\IndexController::class)->public();
     $services->set(Controller\ListController::class)->public();
