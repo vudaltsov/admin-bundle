@@ -15,25 +15,26 @@
         "doctrine/doctrine-bundle": "^1.6.10",
         "doctrine/orm": "^2.5.11",
         "sensio/framework-extra-bundle": "^5.0",
-        "symfony/asset": "^4.0",
-        "symfony/expression-language": "^4.0",
-        "symfony/form": "^4.0",
-        "symfony/framework-bundle": "^4.0",
-        "symfony/property-info": "^4.0",
-        "symfony/security-bundle": "^4.0",
-        "symfony/twig-bundle": "^4.0"
+        "symfony/asset": "^3.4 || ^4.0",
+        "symfony/expression-language": "^3.4 || ^4.0",
+        "symfony/form": "^3.4 || ^4.0",
+        "symfony/framework-bundle": "^3.4 || ^4.0",
+        "symfony/property-info": "^3.4 || ^4.0",
+        "symfony/security-bundle": "^3.4 || ^4.0",
+        "symfony/twig-bundle": "^3.4 || ^4.0"
     },
     "require-dev": {
         "symfony/console": "^3.4",
-        "symfony/debug-bundle": "^4.0",
-        "symfony/dotenv": "^4.0",
+        "symfony/debug-bundle": "^3.4",
+        "symfony/dotenv": "^3.4",
         "symfony/flex": "^1.0",
+        "symfony/lts": "3",
         "symfony/profiler-pack": "^1.0",
-        "symfony/stopwatch": "^4.0",
-        "symfony/validator": "^4.0",
-        "symfony/web-profiler-bundle": "^4.0",
-        "symfony/web-server-bundle": "^4.0",
-        "symfony/yaml": "^4.0"
+        "symfony/stopwatch": "^3.4",
+        "symfony/validator": "^3.4",
+        "symfony/web-profiler-bundle": "^3.4",
+        "symfony/web-server-bundle": "^3.4",
+        "symfony/yaml": "^3.4"
     },
     "config": {
         "sort-packages": true
