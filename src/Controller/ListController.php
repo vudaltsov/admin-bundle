@@ -2,8 +2,9 @@
 
 namespace Ruvents\AdminBundle\Controller;
 
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Ruvents\AdminBundle\Config\Model\EntityConfig;
+use Ruvents\Paginator\PaginatorBuilder;
+use Ruvents\Paginator\Provider\DoctrineOrmProvider;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -17,27 +18,24 @@ class ListController extends AbstractController
      */
     public function __invoke(EntityConfig $entityConfig, Request $request): Response
     {
-        $maxResults = 2;
         $class = $entityConfig->class;
 
         if ($attributes = $entityConfig->list->requiresGranted) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
-        $page = $request->query->getInt('page', 1);
-
         $qb = $this->getEntityManager($class)
             ->createQueryBuilder()
             ->select($alias = 'entity')
-            ->from($class, $alias)
-            ->setMaxResults($maxResults)
-            ->setFirstResult(($page - 1) * $maxResults);
+            ->from($class, $alias);
 
-        $entities = new Paginator($qb);
+        $paginator = PaginatorBuilder::create()
+            ->setProvider(new DoctrineOrmProvider($qb))
+            ->setCurrent($request->query->getInt('page', 1))
+            ->getPaginator();
 
         return $this->render('@RuventsAdmin/list.html.twig', [
-            'entities' => $entities,
-            'max_results' => $maxResults,
+            'paginator' => $paginator,
             'config' => $entityConfig->list,
         ]);
     }

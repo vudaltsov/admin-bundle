@@ -13,7 +13,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for entity in entities %}
+            {% for entity in paginator.items %}
                 <tr>
                     {% for field in config.fields %}
                         <td>
@@ -27,25 +27,15 @@
         </table>
     </div>
 
-    {% set total_results = entities|length %}
-    {% set total_pages = (total_results / max_results)|round(0, 'ceil') %}
-    {% set current_page = app.request.query.int('page', 1) %}
-
-    {% set route = app.request.attributes.get('_route') %}
-    {% set route_params = app.request.attributes.get('_route_params') %}
-
     <nav class="sticky-bottom">
-        <ul class="pagination justify-content-center">
-            {% for page in range(1, total_pages) %}
-                {% set active = page == current_page %}
-                <li class="page-item {{- active ? ' active' }}">
-                    {% if active %}
-                        <span class="page-link">{{ page }}</span>
-                    {% else %}
-                        <a class="page-link" href="{{ path(route, route_params|merge({page: page == 1 ? null : page})) }}">{{ page }}</a>
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
+        {% set route = app.request.attributes.get('_route') %}
+        {% set route_params = app.request.attributes.get('_route_params', []) %}
+        {% embed '@RuventsPaginator/bootstrap_4.html.twig' with {paginator: paginator, class: 'justify-content-center'} %}
+            {% block href path(route, route_params|merge({page: page.first ? null : page.number})) %}
+
+            {% block previous_label 'Предыдущая' %}
+
+            {% block next_label 'Следующая' %}
+        {% endembed %}
     </nav>
 {% endblock %}

@@ -11,4 +11,5 @@ return [
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class => ['dev' => true, 'test' => true],
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Ruvents\AdminBundle\RuventsAdminBundle::class => ['all' => true],
+    Ruvents\PaginatorBundle\RuventsPaginatorBundle::class => ['all' => true],
 ];
