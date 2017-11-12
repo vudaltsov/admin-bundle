@@ -75,31 +75,12 @@
     {%- endif -%}
 {%- endblock %}
 
-{% block form_row -%}
-    {%- if compound -%}
-        {%- set element = 'fieldset' -%}
-    {%- endif -%}
-    {{- parent() -}}
-{%- endblock %}
-
-{% block form_label -%}
-    {%- if compound -%}
-        {%- set element = 'legend' -%}
-        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' col-form-legend')|trim}) -%}
-    {% else %}
-        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' form-control-label')|trim}) -%}
-    {%- endif -%}
-    {{- block('form_label', 'bootstrap_base_layout.html.twig') -}}
-{%- endblock %}
-
 {% block ruvents_admin_group_row %}
     {% set attr = attr|merge({class: (attr.class|default('col-12') ~ ' pb-3')|trim}) %}
     <div {{ block('widget_container_attributes') }}>
         <div class="card h-100">
             <div class="card-body">
-                {%- if form.parent is empty -%}
-                    {{ form_errors(form) }}
-                {%- endif -%}
+                {{ form_errors(form) }}
                 {{- block('form_rows') -}}
                 {{- form_rest(form) -}}
             </div>
@@ -120,4 +101,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block form_errors %}
+    {% if form.parent %}
+        {{ parent() }}
+    {% else %}
+        <div class="col-12">
+            {{ parent() }}
+        </div>
+    {% endif %}
 {% endblock %}
