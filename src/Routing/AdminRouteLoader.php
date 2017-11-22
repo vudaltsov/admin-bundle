@@ -26,10 +26,19 @@ class AdminRouteLoader extends Loader
         /** @var RouteCollection $collection */
         $collection = $this->import($resource);
 
+        $entitiesExist = [] !== $this->config->entities;
         $entityRequirement = implode('|', array_keys($this->config->entities));
 
         foreach ($collection as $name => $route) {
-            $route->setRequirement('ruvents_admin_entity', $entityRequirement);
+            if (in_array('ruvents_admin_entity', $route->compile()->getVariables(), true)) {
+                if (!$entitiesExist) {
+                    $collection->remove($name);
+
+                    continue;
+                }
+
+                $route->setRequirement('ruvents_admin_entity', $entityRequirement);
+            }
         }
 
         return $collection;
