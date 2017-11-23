@@ -7,7 +7,6 @@ use Ruvents\AdminBundle\Controller;
 use Ruvents\AdminBundle\Controller\ArgumentValueResolver;
 use Ruvents\AdminBundle\Form\Type\FieldsFormType;
 use Ruvents\AdminBundle\Menu\MenuResolver;
-use Ruvents\AdminBundle\Routing\AdminRouteLoader;
 use Ruvents\AdminBundle\Twig\AdminExtension;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
@@ -65,9 +64,6 @@ return function (ContainerConfigurator $container) {
 
     $services->set(ArgumentValueResolver\EntityConfigResolver::class)
         ->tag('controller.argument_value_resolver', ['priority' => 150]);
-
-    $services->set(AdminRouteLoader::class)
-        ->tag('routing.loader');
 
     $services->set('ruvents_admin.menu.language', ExpressionLanguage::class);
 

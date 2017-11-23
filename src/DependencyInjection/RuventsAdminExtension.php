@@ -19,6 +19,9 @@ class RuventsAdminExtension extends ConfigurableExtension
         (new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config')))
             ->load('services.php');
 
+        $container->setParameter('ruvents_admin.routing.entities_requirement',
+            implode('|', array_keys($config['entities'])) ?: 'no-entities');
+
         $container->findDefinition(ConfigManager::class)
             ->setArgument('$data', $config)
             ->setArgument('$debug', $config['debug']);
