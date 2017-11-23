@@ -3,20 +3,25 @@ ruvents_admin:
         -
             title: На сайт
             url: /
-            attributes: { target: _blank, icon: ion-home }
+            attributes: { target: _blank, icon: fa-home }
         -
             title: Пользователи
-            attributes: { icon: ion-person-stalker }
+            attributes: { icon: fa-users }
             active: "entity === 'user'"
             children:
-                - { title: Список, entity: 'user:list', active: "entity === 'user' and route === 'ruvents_admin_edit'" }
+                - { title: Список, entity: 'user:list' }
                 - { title: Создать, entity: 'user:create' }
     entities:
         user:
             class: App\Entity\User
             list:
                 fields:
-                    - text@raw{Текст}
+                    - '@id'
+                    - '@title'
+                    - text
+                    - simpleArray[0]
+                    - date
+                    - '@actions'
             create:
                 title: Редактирование пользователя
                 fields:
@@ -25,3 +30,4 @@ ruvents_admin:
                 title: Редактирование пользователя
                 fields:
                     - text
+                    - simpleArray[0]

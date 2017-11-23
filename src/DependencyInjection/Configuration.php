@@ -22,7 +22,8 @@ class Configuration implements ConfigurationInterface
                     ->booleanNode('debug')
                         ->defaultValue('%kernel.debug%')
                     ->end()
-                    ->append($this->form())
+                    ->append($this->forms())
+                    ->append($this->list())
                     ->append($this->menu())
                     ->append($this->entities())
                 ->end()
@@ -64,10 +65,10 @@ class Configuration implements ConfigurationInterface
         return $definition;
     }
 
-    private function form(): ArrayNodeDefinition
+    private function forms(): ArrayNodeDefinition
     {
         return (new TreeBuilder())
-            ->root('form')
+            ->root('forms')
                 ->addDefaultsIfNotSet()
                 ->children()
                     ->scalarNode('default_theme')
@@ -78,6 +79,19 @@ class Configuration implements ConfigurationInterface
                         ->scalarPrototype()
                             ->cannotBeEmpty()
                         ->end()
+                    ->end()
+                ->end();
+    }
+
+    private function list(): ArrayNodeDefinition
+    {
+        return (new TreeBuilder())
+            ->root('list')
+                ->addDefaultsIfNotSet()
+                ->children()
+                    ->scalarNode('types_template')
+                        ->cannotBeEmpty()
+                        ->defaultValue('@RuventsAdmin/list_field_types.html.twig')
                     ->end()
                 ->end();
     }
@@ -112,36 +126,51 @@ class Configuration implements ConfigurationInterface
                         ->defaultValue($defaultTitle)
                         ->cannotBeEmpty()
                     ->end()
-                    ->arrayNode('fields')
-                        ->arrayPrototype()
-                            ->children()
-                                ->scalarNode('name')
-                                    ->isRequired()
-                                    ->cannotBeEmpty()
-                                ->end()
-                                ->scalarNode('type')
-                                    ->defaultNull()
-                                ->end()
-                                ->scalarNode('title')
-                                    ->defaultNull()
-                                ->end()
-                                ->append($this->attributes())
-                            ->end()
-                            ->beforeNormalization()
-                                ->ifString()
-                                ->then(function ($value) {
-                                    if (!preg_match('/^(?<name>[\w-]+)(?>\@(?<type>[\w-\\\]+))?(?>\{(?<title>.*)\})?$/', $value, $matches)) {
-                                        throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
-                                    }
+                    ->append($this->listFields())
+                ->end();
+    }
 
-                                    return [
-                                        'name' => $matches['name'],
-                                        'type' => $matches['type'] ?? null,
-                                        'title' => $matches['title'] ?? null,
-                                    ];
-                                })
-                            ->end()
+    private function listFields(): ArrayNodeDefinition
+    {
+        return (new TreeBuilder())
+            ->root('fields')
+                ->defaultValue([
+                    ['property_path' => null, 'type' => 'id', 'title' => null],
+                    ['property_path' => null, 'type' => 'title', 'title' => null],
+                    ['property_path' => null,'type' => 'actions', 'title' => null],
+                ])
+                ->arrayPrototype()
+                    ->children()
+                        ->scalarNode('property_path')
+                            ->defaultNull()
                         ->end()
+                        ->scalarNode('type')
+                            ->defaultNull()
+                        ->end()
+                        ->scalarNode('title')
+                            ->defaultNull()
+                        ->end()
+                    ->end()
+                    ->beforeNormalization()
+                        ->ifString()
+                        ->then(function ($value) {
+                            if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?>\{(?<title>.*)\})?$/', $value, $matches)) {
+                                throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
+                            }
+
+                            $propertyPath = $matches['property_path'] ?? null ?: null;
+                            $type = $matches['type'] ?? null;
+
+                            if (null === $propertyPath && null === $type) {
+                                throw new \LogicException('"property_path" and "type" cannot be both empty.');
+                            }
+
+                            return [
+                                'property_path' => $propertyPath,
+                                'type' => $type,
+                                'title' => $matches['title'] ?? null,
+                            ];
+                        })
                     ->end()
                 ->end();
     }
@@ -164,7 +193,7 @@ class Configuration implements ConfigurationInterface
                     ->scalarNode('theme')
                         ->defaultNull()
                     ->end()
-                    ->append($this->fields())
+                    ->append($this->formFields())
                 ->end();
     }
 
@@ -176,7 +205,7 @@ class Configuration implements ConfigurationInterface
                 ->append($this->requiresGranted());
     }
 
-    private function fields(): ArrayNodeDefinition
+    private function formFields(): ArrayNodeDefinition
     {
         return (new TreeBuilder())
             ->root('fields')
@@ -199,19 +228,21 @@ class Configuration implements ConfigurationInterface
                         ->then(function ($value) {
                             static $groupI = 1;
 
-                            if (!preg_match('/^(?<name>[\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?<attr_class>(?>\.[\w-]+)+)?(?>\{(?<label>.*)\})?$/', $value, $matches)) {
+                            if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?<attr_class>(?>\.[\w-]+)+)?(?>\{(?<label>.*)\})?$/', $value, $matches)) {
                                 throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
                             }
 
-                            $name = $matches['name'] ?? null;
+                            $propertyPath = $matches['property_path'] ?? null;
                             $type = $matches['type'] ?? null;
 
-                            if (!$name) {
+                            if (!$propertyPath) {
                                 if ($type === 'group') {
                                     $name = '__group'.($groupI++);
                                 } else {
-                                    throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition. Not specifying name is allowed only for the "group" type.', $value));
+                                    throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition. Not specifying property is allowed only for the "group" type.', $value));
                                 }
+                            } else {
+                                $name = preg_replace('/[\[\]\.]+/', '_', $propertyPath);
                             }
 
                             return [
@@ -219,6 +250,7 @@ class Configuration implements ConfigurationInterface
                                 'type' => $type,
                                 'options' => [
                                     'mapped' => $type !== 'group',
+                                    'property_path' => $propertyPath,
                                     'label' => $matches['label'] ?? null,
                                     'attr' => [
                                         'class' => strtr($matches['attr_class'] ?? '', '.', ' '),

@@ -1,0 +1,97 @@
+{% block plain %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|nl2br }}
+    {% endif %}
+{% endblock %}
+
+{% block raw %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|raw }}
+    {% endif %}
+{% endblock %}
+
+{% block dump dump({entity: entity, value: value}) %}
+
+{% block null %}
+    <span class="badge badge-dark">null</span>
+{% endblock %}
+
+{% block bool %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% elseif value %}
+        <span class="badge badge-success">Yes</span>
+    {% else %}
+        <span class="badge badge-danger">No</span>
+    {% endif %}
+{% endblock %}
+
+{% block length %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|length }}
+    {% endif %}
+{% endblock %}
+
+{% block json value|json_encode %}
+
+{% block simple_array %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|join(', ') }}
+    {% endif %}
+{% endblock %}
+
+{% block date %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|date('d.m.Y') }}
+    {% endif %}
+{% endblock %}
+
+{% block date_time %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|date('d.m.Y H:i') }}
+    {% endif %}
+{% endblock %}
+
+{% block time %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {{ value|date('H:i') }}
+    {% endif %}
+{% endblock %}
+
+{% block php_type %}
+    <code>{{ type }}</code>
+{% endblock %}
+
+{% block blob %}
+    <code>blob</code>
+{% endblock %}
+
+{% block binary %}
+    <code>binary</code>
+{% endblock %}
+
+{% block actions %}
+    <a class="btn btn-sm btn-outline-primary" href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}"><i class="fa fa-pencil"></i></a>
+{% endblock %}
+
+{% block title %}
+    <a href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}">
+        {{ entity_title }}
+    </a>
+{% endblock %}
+
+{% block id id %}

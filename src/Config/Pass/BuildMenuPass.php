@@ -8,21 +8,10 @@ use Ruvents\AdminBundle\Config\Model\Menu\ChildrenItemConfig;
 use Ruvents\AdminBundle\Config\Model\Menu\EntityItemConfig;
 use Ruvents\AdminBundle\Config\Model\Menu\RouteItemConfig;
 use Ruvents\AdminBundle\Config\Model\Menu\UrlItemConfig;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BuildMenuPass implements PassInterface
 {
     const ENTITY_HREF_REGEXP = '/^(?<entity>\w+):(?<action>list|create)$/';
-
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
-
-    public function __construct(UrlGeneratorInterface $urlGenerator)
-    {
-        $this->urlGenerator = $urlGenerator;
-    }
 
     /**
      * {@inheritdoc}

@@ -27,7 +27,7 @@ class FormFieldsPass implements PassInterface
      */
     public function process(Config $config, array $data)
     {
-        $aliases = $data['form']['type_aliases'] += $this->getSymfonyFormTypeAliases();
+        $aliases = $data['forms']['type_aliases'] += $this->getSymfonyFormTypeAliases();
         $aliases['group'] = GroupType::class;
 
         foreach ($config->entities as $entity) {

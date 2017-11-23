@@ -37,6 +37,7 @@ class ListController extends AbstractController
         return $this->render('@RuventsAdmin/list.html.twig', [
             'paginator' => $paginator,
             'config' => $entityConfig->list,
+            'entity_name' => $entityConfig->name,
         ]);
     }
 }

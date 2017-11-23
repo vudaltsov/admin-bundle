@@ -70,10 +70,9 @@ class BuildEntitiesPass implements PassInterface
     {
         $field = new ListFieldConfig();
 
-        $field->name = $data['name'];
+        $field->propertyPath = $data['property_path'];
         $field->type = $data['type'];
         $field->title = $data['title'];
-        $field->attributes = $data['attributes'];
 
         return $field;
     }

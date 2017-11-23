@@ -1,14 +1,12 @@
 {% extends '@RuventsAdmin/base.html.twig' %}
 
-{% use '@RuventsAdmin/list_types.html.twig' %}
-
 {% block main %}
     <div class="card mb-g">
         <table class="table table-bordered">
             <thead>
             <tr>
                 {% for field in config.fields %}
-                    <th>{{ field.title|default(field.name) }}</th>
+                    <th>{{ field.title|default((field.propertyPath|default(field.type))|humanize) }}</th>
                 {% endfor %}
             </tr>
             </thead>
@@ -17,8 +15,7 @@
                 <tr>
                     {% for field in config.fields %}
                         <td>
-                            {% set value = attribute(entity, field.name) %}
-                            {{ block('field_' ~ field.type) }}
+                            {{ ruvents_admin_render_list_field(entity_name, entity, field.propertyPath, field.type) }}
                         </td>
                     {% endfor %}
                 </tr>

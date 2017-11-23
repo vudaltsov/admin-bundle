@@ -5,10 +5,9 @@ namespace Ruvents\AdminBundle\Config\Model\Field;
 use Ruvents\AdminBundle\Config\Model\AbstractConfig;
 
 /**
- * @property string   $name
- * @property string   $type
- * @property string   $title
- * @property array    $attributes
+ * @property null|string $propertyPath
+ * @property null|string $type
+ * @property null|string $title
  */
 class ListFieldConfig extends AbstractConfig
 {

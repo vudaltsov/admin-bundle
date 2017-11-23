@@ -6,8 +6,10 @@ use Ruvents\AdminBundle\Config;
 use Ruvents\AdminBundle\Controller;
 use Ruvents\AdminBundle\Controller\ArgumentValueResolver;
 use Ruvents\AdminBundle\Form\Type\FieldsFormType;
+use Ruvents\AdminBundle\ListField\DoctrineFieldTypeGuesser;
+use Ruvents\AdminBundle\ListField\PhpTypeContextProcessor;
 use Ruvents\AdminBundle\Menu\MenuResolver;
-use Ruvents\AdminBundle\Twig\AdminExtension;
+use Ruvents\AdminBundle\Twig;
 use Symfony\Component\Cache\Simple\FilesystemCache;
 use Symfony\Component\ExpressionLanguage\ExpressionLanguage;
 
@@ -38,10 +40,6 @@ return function (ContainerConfigurator $container) {
         ->tag('ruvents_admin.config_pass', ['priority' => 512]);
 
     $services
-        ->set(Config\Pass\ListFieldsPass::class)
-        ->tag('ruvents_admin.config_pass', ['priority' => 512]);
-
-    $services
         ->set(Config\Pass\ResolveFormThemePass::class)
         ->tag('ruvents_admin.config_pass', ['priority' => 256]);
 
@@ -60,7 +58,13 @@ return function (ContainerConfigurator $container) {
 
     $services->set(FieldsFormType::class);
 
-    $services->set(AdminExtension::class);
+    $services->set(Twig\ConfigExtension::class);
+    $services->set(Twig\ListExtension::class)
+        ->args([
+            '$guessers' => tagged('ruvents_admin.list_field_type_guesser'),
+            '$processors' => tagged('ruvents_admin.list_field_type_value_guesser'),
+        ]);
+    $services->set(Twig\MenuExtension::class);
 
     $services->set(ArgumentValueResolver\EntityConfigResolver::class)
         ->tag('controller.argument_value_resolver', ['priority' => 150]);
@@ -71,4 +75,10 @@ return function (ContainerConfigurator $container) {
         ->args([
             '$language' => ref('ruvents_admin.menu.language'),
         ]);
+
+    $services->set(DoctrineFieldTypeGuesser::class)
+        ->tag('ruvents_admin.list_field_type_guesser', ['priority' => 100]);
+
+    $services->set(PhpTypeContextProcessor::class)
+        ->tag('ruvents_admin.list_field_type_context_processor');
 };

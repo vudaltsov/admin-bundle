@@ -11,7 +11,7 @@ class ResolveFormThemePass implements PassInterface
      */
     public function process(Config $config, array $data)
     {
-        $defaultTheme = $data['form']['default_theme'];
+        $defaultTheme = $data['forms']['default_theme'];
 
         foreach ($config->entities as $entity) {
             if (null === $entity->create->theme) {
