@@ -5,13 +5,13 @@
         <li class="menu-item">
             {% if item.href %}
                 <a href="{{ item.href }}" target="{{ item.attributes.target|default('_self') }}" class="menu-link {{- item.active ? ' active' }}">
-                    <i class="menu-icon {{ item.attributes.icon|default }}"></i>
+                    <i class="menu-icon fa {{ item.attributes.icon|default }}"></i>
                     <span>{{ item.title }}</span>
                 </a>
             {% else %}
                 {% set sub_id = id ~ 'Sub' ~ loop.index %}
                 <a href="#{{ sub_id }}" class="menu-link {{ item.active ? 'active' : 'collapsed' }}" data-toggle="collapse" data-parent="#menu">
-                    <i class="menu-icon {{ item.attributes.icon|default }}"></i>
+                    <i class="menu-icon fa {{ item.attributes.icon|default }}"></i>
                     <span>{{ item.title }}</span>
                     <i class="menu-arrow ion-ios-arrow-right"></i>
                 </a>
