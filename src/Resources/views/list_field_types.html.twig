@@ -85,12 +85,14 @@
 {% endblock %}
 
 {% block actions %}
-    <a class="btn btn-sm btn-outline-primary" href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}"><i class="fa fa-pencil"></i></a>
+    <a class="btn btn-sm btn-outline-primary" href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}">
+        <i class="fa fa-pencil"></i>
+    </a>
 {% endblock %}
 
 {% block title %}
     <a href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}">
-        {{ entity_title }}
+        {{ value|default(entity_title) }}
     </a>
 {% endblock %}
 
