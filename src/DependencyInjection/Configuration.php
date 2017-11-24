@@ -158,7 +158,9 @@ class Configuration implements ConfigurationInterface
                                 throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
                             }
 
-                            $propertyPath = $matches['property_path'] ?? null ?: null;
+                            $matches = array_filter($matches);
+
+                            $propertyPath = $matches['property_path'] ?? null;
                             $type = $matches['type'] ?? null;
 
                             if (null === $propertyPath && null === $type) {
@@ -231,6 +233,8 @@ class Configuration implements ConfigurationInterface
                             if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?<attr_class>(?>\.[\w-]+)+)?(?>\{(?<label>.*)\})?$/', $value, $matches)) {
                                 throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
                             }
+
+                            $matches = array_filter($matches);
 
                             $propertyPath = $matches['property_path'] ?? null;
                             $type = $matches['type'] ?? null;
