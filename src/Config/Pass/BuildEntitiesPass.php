@@ -47,6 +47,13 @@ class BuildEntitiesPass implements PassInterface
         $entity->class = $class;
         $entity->requiresGranted = $data['requires_granted'];
         $entity->list = $this->buildListAction($data['list']);
+
+        if (empty($data['create']['fields'])) {
+            $data['create']['fields'] = $data['edit']['fields'];
+        } elseif (empty($data['edit']['fields'])) {
+            $data['edit']['fields'] = $data['create']['fields'];
+        }
+
         $entity->create = $this->buildFormAction($data['create']);
         $entity->edit = $this->buildFormAction($data['edit']);
         $entity->delete = $this->buildDeleteAction($data['delete']);
