@@ -10,7 +10,7 @@
                 </a>
             {% else %}
                 {% set sub_id = id ~ 'Sub' ~ loop.index %}
-                <a href="#{{ sub_id }}" class="menu-link {{ item.active ? 'active' : 'collapsed' }}" data-toggle="collapse" data-parent="#menu">
+                <a href="#{{ sub_id }}" class="menu-link {{ item.active ? 'active' : 'collapsed' }}" data-toggle="collapse" data-parent="#{{ id }}">
                     <i class="menu-icon fa {{ item.attributes.icon|default }}"></i>
                     <span>{{ item.title }}</span>
                     <i class="menu-arrow fa fa-angle-down"></i>
