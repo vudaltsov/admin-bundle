@@ -13,7 +13,7 @@
                 <a href="#{{ sub_id }}" class="menu-link {{ item.active ? 'active' : 'collapsed' }}" data-toggle="collapse" data-parent="#menu">
                     <i class="menu-icon fa {{ item.attributes.icon|default }}"></i>
                     <span>{{ item.title }}</span>
-                    <i class="menu-arrow ion-ios-arrow-right"></i>
+                    <i class="menu-arrow fa fa-angle-down"></i>
                 </a>
                 <ul id="{{ sub_id }}" class="menu-sub collapse {{- item.active ? ' show' }}">
                     {% for subitem in item.children %}
