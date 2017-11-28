@@ -30,4 +30,12 @@ return function (RoutingConfigurator $configurator) {
             'id' => '[\w-]+',
         ])
         ->controller(Controller\EditController::class);
+
+    $configurator
+        ->add('ruvents_admin_delete', '/{ruvents_admin_entity}/delete/{id}')
+        ->requirements([
+            'ruvents_admin_entity' => '%ruvents_admin.routing.entities_requirement%',
+            'id' => '[\w-]+',
+        ])
+        ->controller(Controller\DeleteController::class);
 };
