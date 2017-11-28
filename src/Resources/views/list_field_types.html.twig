@@ -88,6 +88,12 @@
     <a class="btn btn-sm btn-outline-primary" href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}">
         <i class="fa fa-pencil"></i>
     </a>
+
+    {% if entity_config.delete.enabled %}
+        <a class="btn btn-sm btn-danger" href="{{ path('ruvents_admin_delete', {ruvents_admin_entity: entity_name, id: id}) }}">
+            <i class="fa fa-times"></i>
+        </a>
+    {% endif %}
 {% endblock %}
 
 {% block title %}
