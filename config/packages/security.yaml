@@ -14,8 +14,8 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            http_basic: ~
+        #main:
+            #http_basic: ~
 
             # activate different ways to authenticate
 
