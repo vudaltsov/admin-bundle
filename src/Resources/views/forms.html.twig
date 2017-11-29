@@ -42,11 +42,6 @@
     </div>
 {%- endblock %}
 
-{% block choice_widget_collapsed -%}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-select')|trim}) -%}
-    {{- block('choice_widget_collapsed', 'form_div_layout.html.twig') -}}
-{%- endblock %}
-
 {% block checkbox_radio_label -%}
     {#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
     {%- if widget is defined -%}
