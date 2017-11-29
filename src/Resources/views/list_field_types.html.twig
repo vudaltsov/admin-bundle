@@ -90,7 +90,7 @@
     </a>
 
     {% if entity_config.delete.enabled %}
-        <a class="btn btn-sm btn-danger" href="{{ path('ruvents_admin_delete', {ruvents_admin_entity: entity_name, id: id}) }}">
+        <a class="btn btn-sm btn-outline-danger" href="{{ path('ruvents_admin_delete', {ruvents_admin_entity: entity_name, id: id}) }}">
             <i class="fa fa-times"></i>
         </a>
     {% endif %}
