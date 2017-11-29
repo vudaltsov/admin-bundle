@@ -1,3 +1,15 @@
+{% block default %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% elseif value_php_type is same as('bool') %}
+        {{ block('bool') }}
+    {% elseif value_php_type in ['int', 'float', 'string'] %}
+        {{ value }}
+    {% else %}
+        <code>{{ value_php_type }}</code>
+    {% endif %}
+{% endblock %}
+
 {% block plain %}
     {% if value is null %}
         {{ block('null') }}
@@ -18,6 +30,10 @@
 
 {% block null %}
     <span class="badge badge-dark">null</span>
+{% endblock %}
+
+{% block empty %}
+    <span class="badge badge-dark">empty</span>
 {% endblock %}
 
 {% block bool %}
@@ -43,6 +59,8 @@
 {% block simple_array %}
     {% if value is null %}
         {{ block('null') }}
+    {% elseif value is empty %}
+        {{ block('empty') }}
     {% else %}
         {{ value|join(', ') }}
     {% endif %}
@@ -72,10 +90,6 @@
     {% endif %}
 {% endblock %}
 
-{% block php_type %}
-    <code>{{ type }}</code>
-{% endblock %}
-
 {% block blob %}
     <code>blob</code>
 {% endblock %}
@@ -85,21 +99,55 @@
 {% endblock %}
 
 {% block actions %}
-    <a class="btn btn-sm btn-outline-primary" href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}">
+    <a class="btn btn-sm btn-outline-primary" href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: block('id')}) }}">
         <i class="fa fa-pencil"></i>
     </a>
 
     {% if entity_config.delete.enabled %}
-        <a class="btn btn-sm btn-outline-danger" href="{{ path('ruvents_admin_delete', {ruvents_admin_entity: entity_name, id: id}) }}">
+        <a class="btn btn-sm btn-outline-danger" href="{{ path('ruvents_admin_delete', {ruvents_admin_entity: entity_name, id: block('id')}) }}">
             <i class="fa fa-times"></i>
         </a>
     {% endif %}
 {% endblock %}
 
+{% block id attribute(entity, entity_id_property) %}
+
+{% block entity_to_string entity_has_to_string ? entity : entity_class ~ '#' ~ block('id') %}
+
 {% block title %}
-    <a href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: id}) }}">
-        {{ value|default(entity_title) }}
+    <a href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: entity_name, id: block('id')}) }}">
+        {{ value|default(block('entity_to_string')) }}
     </a>
 {% endblock %}
 
-{% block id id %}
+{% block association %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        {% with {entity_has_to_string: association_has_to_string, entity_class: association_class, entity_id_property: association_id_property} %}
+        {% if association_single %}
+            {% with {entity: value} %}
+            {{ block('association_element') }}
+            {% endwith %}
+        {% else %}
+            {% for item in value -%}
+                {% with {entity: item} -%}
+                {{- not loop.first ? ',' }} {{ block('association_element') -}}
+                {% endwith -%}
+            {% else %}
+                {{ block('empty') }}
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    {% endif %}
+{% endblock %}
+
+{% block association_element -%}
+    {%- if association_entity_name -%}
+        <a href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: association_entity_name, id: block('id')}) }}">
+            {{- block('entity_to_string') -}}
+        </a>
+    {%- else -%}
+        {{- block('entity_to_string') -}}
+    {%- endif -%}
+{%- endblock %}

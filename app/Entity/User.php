@@ -8,7 +8,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity()
  * @ORM\Table("`user`")
- * @ORM\HasLifecycleCallbacks()
  */
 class User
 {
@@ -36,6 +35,13 @@ class User
     public $group;
 
     /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Group")
+     *
+     * @var Group[]
+     */
+    public $groups;
+
+    /**
      * @ORM\Column(type="simple_array", nullable=true)
      *
      * @var array
@@ -52,13 +58,5 @@ class User
     public function __toString()
     {
         return $this->id.' user';
-    }
-
-    /**
-     * @ORM\PostLoad()
-     */
-    public function post()
-    {
-        $this->simpleArray[0] = new \stdClass();
     }
 }

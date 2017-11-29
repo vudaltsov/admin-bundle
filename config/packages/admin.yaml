@@ -19,8 +19,10 @@ ruvents_admin:
                     - '@id'
                     - '@title'
                     - text
-                    - simpleArray[0]
+                    - simpleArray
                     - date
+                    - group
+                    - groups
                     - '@actions'
             create:
                 title: Редактирование пользователя
@@ -31,3 +33,7 @@ ruvents_admin:
                 fields:
                     - text
                     - simpleArray[0]
+                    - group
+                    - groups
+        group:
+            class: App\Entity\Group

@@ -4,8 +4,8 @@ namespace Ruvents\AdminBundle\DependencyInjection;
 
 use Ruvents\AdminBundle\Config\ConfigManager;
 use Ruvents\AdminBundle\Config\Pass\PassInterface;
-use Ruvents\AdminBundle\ListField\TypeGuesserInterface;
-use Ruvents\AdminBundle\ListField\TypeContextProcessorInterface;
+use Ruvents\AdminBundle\ListField\TypeContextProcessor\TypeContextProcessorInterface;
+use Ruvents\AdminBundle\ListField\TypeGuesser\TypeGuesserInterface;
 use Ruvents\AdminBundle\Twig\ListExtension;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

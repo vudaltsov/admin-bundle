@@ -3,16 +3,19 @@ declare(strict_types=1);
 
 namespace Ruvents\AdminBundle\DependencyInjection\Compiler;
 
-use Ruvents\AdminBundle\ListField\TypeContextProcessorInterface;
+use Ruvents\AdminBundle\ListField\TypeContextProcessor\TypeContextProcessorInterface;
 use Ruvents\AdminBundle\Twig\ListExtension;
 use Symfony\Component\Config\Resource\FileResource;
+use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
+use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
 {
+    use PriorityTaggedServiceTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -22,11 +25,11 @@ class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
             return;
         }
 
-        $tagged = $container->findTaggedServiceIds($tag = 'ruvents_admin.list_field_type_context_processor', true);
-        $processors = [];
+        $processorReferences = $this->findAndSortTaggedServices($tag = 'ruvents_admin.list_field_type_context_processor', $container);
+        $processorReferencesByType = [];
 
-        foreach ($tagged as $id => $attributes) {
-            $processor = $container->findDefinition($id);
+        foreach ($processorReferences as $processorReference) {
+            $processor = $container->findDefinition((string)$processorReference);
             $class = $processor->getClass();
 
             if (!is_subclass_of($class, TypeContextProcessorInterface::class)) {
@@ -35,15 +38,17 @@ class ListFieldTypeContextProcessorsPass implements CompilerPassInterface
 
             $type = call_user_func([$class, 'getType']);
 
-            if (isset($processors[$type])) {
-                continue;
-            }
+            $classFile = (new \ReflectionClass($class))->getFileName();
+            $container->addResource(new FileResource($classFile));
 
-            $container->addResource(new FileResource((new \ReflectionClass($class))->getFileName()));
-            $processors[$type] = new Reference($id);
+            $processorReferencesByType[$type][] = $processorReference;
         }
 
+        $processors = array_map(function (array $references) use ($container) {
+            return new IteratorArgument($references);
+        }, $processorReferencesByType);
+
         $container->findDefinition(ListExtension::class)
-            ->setArgument('$processors', ServiceLocatorTagPass::register($container, $processors));
+            ->setArgument('$processors', $processors);
     }
 }

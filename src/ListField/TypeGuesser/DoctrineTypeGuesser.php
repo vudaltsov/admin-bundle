@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Ruvents\AdminBundle\ListField;
+namespace Ruvents\AdminBundle\ListField\TypeGuesser;
 
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\DBAL\Types\Type;
 
-class DoctrineFieldTypeGuesser implements TypeGuesserInterface
+class DoctrineTypeGuesser implements TypeGuesserInterface
 {
     private $map = [
         Type::TARRAY => 'json',
@@ -58,6 +58,10 @@ class DoctrineFieldTypeGuesser implements TypeGuesserInterface
             $type = (string)$metadata->getTypeOfField($propertyPath);
 
             return $this->map[$type] ?? null;
+        }
+
+        if ($metadata->hasAssociation($propertyPath)) {
+            return 'association';
         }
 
         return null;

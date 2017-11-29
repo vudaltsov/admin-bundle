@@ -24,4 +24,9 @@ class Group
      * @ORM\Column(type="string")
      */
     public $title = '';
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }
