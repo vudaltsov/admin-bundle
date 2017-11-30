@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Ruvents\AdminBundle\Menu;
 
@@ -119,7 +120,7 @@ class MenuResolver
         }
 
         if ($expression) {
-            return $this->language->evaluate($expression, [
+            return (bool)$this->language->evaluate($expression, [
                 'request' => $request = $this->requestStack->getCurrentRequest(),
                 'route' => $request->attributes->get('_route'),
                 'route_params' => $params = $request->attributes->get('_route_params', []),
