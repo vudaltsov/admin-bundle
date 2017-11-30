@@ -71,8 +71,8 @@ class CreateController extends AbstractController
         }
 
         return $this->render('@RuventsAdmin/create.html.twig', [
+            'entity_config' => $entityConfig,
             'form' => $form->createView(),
-            'config' => $entityConfig,
         ]);
     }
 }

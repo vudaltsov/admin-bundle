@@ -3,15 +3,17 @@
 {% trans_default_domain 'ruvents_admin' %}
 
 {% block main %}
-    <div class="mb-g">
-        <a href="{{ path('ruvents_admin_create', {ruvents_admin_entity: entity_name}) }}" class="btn btn-primary">{{ 'Create'|trans }}</a>
-    </div>
+    {% if entity_config.create.enabled %}
+        <div class="mb-g">
+            <a href="{{ path('ruvents_admin_create', {ruvents_admin_entity: entity_config.name}) }}" class="btn btn-primary">{{ 'Create'|trans }}</a>
+        </div>
+    {% endif %}
 
     <div class="card mb-g">
         <table class="table table-bordered">
             <thead>
             <tr>
-                {% for field in config.fields %}
+                {% for field in entity_config.list.fields %}
                     <th>{{ field.title|default((field.propertyPath|default(field.type))|humanize|trans) }}</th>
                 {% endfor %}
             </tr>
@@ -19,9 +21,9 @@
             <tbody>
             {% for entity in paginator.items %}
                 <tr>
-                    {% for field in config.fields %}
+                    {% for field in entity_config.list.fields %}
                         <td>
-                            {{ ruvents_admin_render_list_field(entity_name, entity, field.propertyPath, field.type) }}
+                            {{ ruvents_admin_render_list_field(entity_config.name, entity, field.propertyPath, field.type) }}
                         </td>
                     {% endfor %}
                 </tr>

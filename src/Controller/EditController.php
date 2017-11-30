@@ -35,8 +35,8 @@ class EditController extends AbstractController
         }
 
         $builder = null === $editConfig->type
-            ? $this->createEntityFormBuilder($editConfig->fields, $entityConfig->class, $editConfig->options)
-            : $this->createCustomFormBuilder($editConfig->type, $entityConfig->class, $editConfig->options);
+            ? $this->createEntityFormBuilder($editConfig->fields, $class, $editConfig->options)
+            : $this->createCustomFormBuilder($editConfig->type, $class, $editConfig->options);
 
         $builder
             ->setData($entity)
@@ -88,8 +88,8 @@ class EditController extends AbstractController
         }
 
         return $this->render('@RuventsAdmin/edit.html.twig', [
+            'entity_config' => $entityConfig,
             'form' => $form->createView(),
-            'config' => $entityConfig,
         ]);
     }
 }

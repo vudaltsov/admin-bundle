@@ -1,6 +1,6 @@
 {% extends '@RuventsAdmin/base.html.twig' %}
 
 {% block main %}
-    {% form_theme form '@RuventsAdmin/forms.html.twig' %}
+    {% form_theme form entity_config.create.theme %}
     {{ form(form) }}
 {% endblock %}

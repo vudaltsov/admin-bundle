@@ -18,9 +18,10 @@ class ListController extends AbstractController
      */
     public function __invoke(EntityConfig $entityConfig, Request $request): Response
     {
+        $listConfig = $entityConfig->list;
         $class = $entityConfig->class;
 
-        if ($attributes = $entityConfig->list->requiresGranted) {
+        if ($attributes = $listConfig->requiresGranted) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
@@ -35,9 +36,8 @@ class ListController extends AbstractController
             ->getPaginator();
 
         return $this->render('@RuventsAdmin/list.html.twig', [
+            'entity_config' => $entityConfig,
             'paginator' => $paginator,
-            'config' => $entityConfig->list,
-            'entity_name' => $entityConfig->name,
         ]);
     }
 }
