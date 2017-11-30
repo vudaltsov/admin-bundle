@@ -2,14 +2,21 @@
 
 {% trans_default_domain 'ruvents_admin' %}
 
-{% block main %}
-    {% if entity_config.create.enabled %}
-        <div class="mb-g">
-            <a href="{{ path('ruvents_admin_create', {ruvents_admin_entity: entity_config.name}) }}" class="btn btn-primary">{{ 'Create'|trans }}</a>
-        </div>
-    {% endif %}
+{% block title entity_config.list.title %}
 
-    <div class="card mb-g">
+{% block main %}
+    <div class="row">
+        <div class="col-auto">
+            <h1>{{ entity_config.list.title }}</h1>
+        </div>
+        <div class="ml-auto col-auto text-right">
+            {% if entity_config.create.enabled %}
+                <a href="{{ path('ruvents_admin_create', {ruvents_admin_entity: entity_config.name}) }}" class="btn btn-primary">{{ 'Create'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="card mb-3">
         <table class="table table-bordered">
             <thead>
             <tr>

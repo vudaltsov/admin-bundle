@@ -15,6 +15,7 @@ ruvents_admin:
         user:
             class: App\Entity\User
             list:
+                title: Список пользователей
                 per_page: 2
                 fields:
                     - '@id'
@@ -26,7 +27,7 @@ ruvents_admin:
                     - groups
                     - '@actions'
             create:
-                title: Редактирование пользователя
+                title: Создание пользователя
                 fields:
                     - text
             edit:
