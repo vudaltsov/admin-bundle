@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ruvents\UploadBundle\Validator\AssertUpload;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -55,6 +56,16 @@ class User
      * @var \DateTimeImmutable
      */
     public $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Upload", cascade={"all"})
+     *
+     * @Assert\NotNull()
+     * @AssertUpload(@Assert\Image())
+     *
+     * @var Upload
+     */
+    public $image;
 
     public function __toString()
     {

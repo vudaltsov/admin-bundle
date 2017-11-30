@@ -32,6 +32,7 @@ ruvents_admin:
                     - date
                     - group
                     - groups
+                    - image
                     - '@actions'
             create:
                 title: Создание пользователя
@@ -45,5 +46,6 @@ ruvents_admin:
                     - '@group{Title}'
                     - group
                     - groups
+                    - image
         group:
             class: App\Entity\Group

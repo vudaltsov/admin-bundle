@@ -25,6 +25,7 @@
         "symfony/twig-bundle": "^3.4 || ^4.0"
     },
     "require-dev": {
+        "ruvents/upload-bundle": "^0.4.0@dev",
         "symfony/console": "^3.4",
         "symfony/debug-bundle": "^3.4",
         "symfony/dotenv": "^3.4",

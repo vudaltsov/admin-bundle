@@ -157,3 +157,11 @@
         {{- block('entity_to_string') -}}
     {%- endif -%}
 {%- endblock %}
+
+{% block upload %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        <img class="img-thumbnail" src="{{ asset(value) }}" alt="" style="max-height: 100px;">
+    {% endif %}
+{% endblock %}

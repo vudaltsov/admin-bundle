@@ -59,3 +59,18 @@
         </div>
     {% endif %}
 {% endblock %}
+
+{% block ruvents_upload_widget %}
+    <div class="row">
+        {% if data and valid %}
+            <div class="col-auto">
+                <a href="{{ asset(data) }}" target="_blank">
+                    <img src="{{ asset(data) }}" alt="" class="img-thumbnail" style="max-height: 200px;">
+                </a>
+            </div>
+        {% endif %}
+        <div class="col">
+            {{ form_row(form.file) }}
+        </div>
+    </div>
+{% endblock %}

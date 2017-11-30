@@ -12,4 +12,5 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Ruvents\AdminBundle\RuventsAdminBundle::class => ['all' => true],
     Ruvents\PaginatorBundle\RuventsPaginatorBundle::class => ['all' => true],
+    Ruvents\UploadBundle\RuventsUploadBundle::class => ['dev' => true, 'test' => true],
 ];

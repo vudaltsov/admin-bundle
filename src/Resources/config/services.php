@@ -8,6 +8,7 @@ use Ruvents\AdminBundle\Controller;
 use Ruvents\AdminBundle\Controller\ArgumentValueResolver;
 use Ruvents\AdminBundle\ListField\TypeContextProcessor\AssociationTypeContextProcessor;
 use Ruvents\AdminBundle\ListField\TypeGuesser\DoctrineTypeGuesser;
+use Ruvents\AdminBundle\ListField\TypeGuesser\UploadTypeGuesser;
 use Ruvents\AdminBundle\Menu\MenuResolver;
 use Ruvents\AdminBundle\Twig;
 use Symfony\Component\Cache\Simple\FilesystemCache;
@@ -76,6 +77,9 @@ return function (ContainerConfigurator $container) {
 
     $services->set(DoctrineTypeGuesser::class)
         ->tag('ruvents_admin.list_field_type_guesser', ['priority' => 100]);
+
+    $services->set(UploadTypeGuesser::class)
+        ->tag('ruvents_admin.list_field_type_guesser', ['priority' => 110]);
 
     $services->set(AssociationTypeContextProcessor::class)
         ->tag('ruvents_admin.list_field_type_context_processor');

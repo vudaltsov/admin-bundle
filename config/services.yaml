@@ -22,3 +22,6 @@ services:
         # you can exclude directories or files
         # but if a service is unused, it's removed anyway
         exclude: '../app/{Entity,Migrations,Repository,Tests}'
+
+ruvents_upload:
+    default_class: App\Entity\Upload
