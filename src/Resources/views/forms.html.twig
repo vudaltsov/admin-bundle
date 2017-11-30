@@ -62,7 +62,7 @@
 
 {% block ruvents_upload_widget %}
     <div class="row">
-        {% if data and valid %}
+        {% if data and valid and data.path %}
             <div class="col-auto">
                 <a href="{{ asset(data) }}" target="_blank">
                     <img src="{{ asset(data) }}" alt="" class="img-thumbnail" style="max-height: 200px;">
