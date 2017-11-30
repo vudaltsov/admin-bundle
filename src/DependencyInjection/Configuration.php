@@ -125,6 +125,9 @@ class Configuration implements ConfigurationInterface
                         ->defaultValue($defaultTitle)
                         ->cannotBeEmpty()
                     ->end()
+                    ->integerNode('per_page')
+                        ->defaultValue(20)
+                    ->end()
                     ->append($this->listFields())
                 ->end();
     }

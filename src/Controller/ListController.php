@@ -32,6 +32,7 @@ class ListController extends AbstractController
 
         $paginator = PaginatorBuilder::create()
             ->setProvider(new DoctrineOrmProvider($qb))
+            ->setPerPage($listConfig->perPage)
             ->setCurrent($request->query->getInt('page', 1))
             ->getPaginator();
 

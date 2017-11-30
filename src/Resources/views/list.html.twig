@@ -38,17 +38,19 @@
         </table>
     </div>
 
-    <nav class="sticky-bottom">
-        {% set route = app.request.attributes.get('_route') %}
-        {% set route_params = app.request.attributes.get('_route_params', []) %}
-        {% embed '@RuventsPaginator/bootstrap_4.html.twig' with {paginator: paginator, class: 'justify-content-center'} %}
-            {% trans_default_domain 'ruvents_admin' %}
+    {% if paginator.total > 1 %}
+        <nav class="sticky-bottom">
+            {% set route = app.request.attributes.get('_route') %}
+            {% set route_params = app.request.attributes.get('_route_params', []) %}
+            {% embed '@RuventsPaginator/bootstrap_4.html.twig' with {paginator: paginator, class: 'justify-content-center'} %}
+                {% trans_default_domain 'ruvents_admin' %}
 
-            {% block href path(route, route_params|merge({page: page.first ? null : page.number})) %}
+                {% block href path(route, route_params|merge({page: page.first ? null : page.number})) %}
 
-            {% block previous_label 'Previous'|trans %}
+                {% block previous_label 'Previous'|trans %}
 
-            {% block next_label 'Next'|trans %}
-        {% endembed %}
-    </nav>
+                {% block next_label 'Next'|trans %}
+            {% endembed %}
+        </nav>
+    {% endif %}
 {% endblock %}

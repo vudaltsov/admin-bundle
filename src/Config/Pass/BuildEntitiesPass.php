@@ -66,6 +66,7 @@ class BuildEntitiesPass implements PassInterface
         $action = new ListActionConfig();
 
         $action->enabled = $data['enabled'];
+        $action->perPage = $data['per_page'];
         $action->title = $data['title'];
         $action->requiresGranted = $data['requires_granted'];
         $action->fields = array_map([$this, 'buildListField'], $data['fields']);

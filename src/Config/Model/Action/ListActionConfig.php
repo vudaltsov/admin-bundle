@@ -7,6 +7,7 @@ use Ruvents\AdminBundle\Config\Model\Field\ListFieldConfig;
 
 /**
  * @property bool              $enabled
+ * @property int               $perPage
  * @property string[]          $requiresGranted
  * @property string            $title
  * @property ListFieldConfig[] $fields

@@ -15,6 +15,7 @@ ruvents_admin:
         user:
             class: App\Entity\User
             list:
+                per_page: 2
                 fields:
                     - '@id'
                     - '@title'
