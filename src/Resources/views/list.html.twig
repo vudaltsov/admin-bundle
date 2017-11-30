@@ -27,6 +27,12 @@
                         </td>
                     {% endfor %}
                 </tr>
+            {% else %}
+                <tr>
+                    <td colspan="{{ entity_config.list.fields|length }}">
+                        {{ 'No entities found'|trans }}
+                    </td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
