@@ -74,6 +74,9 @@
     {% set attr = attr|merge({class: (attr.class|default('col-12') ~ ' pb-3')|trim}) %}
     <div {{ block('widget_container_attributes') }}>
         <div class="card h-100">
+            {% if label %}
+                <div class="card-header">{{ label }}</div>
+            {% endif %}
             <div class="card-body">
                 {{ form_errors(form) }}
                 {{- block('form_rows') -}}

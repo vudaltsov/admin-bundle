@@ -33,7 +33,7 @@ ruvents_admin:
                 fields:
                     - text
                     - simpleArray[0]
-                    - '@group'
+                    - '@group{Title}'
                     - group
                     - groups
         group:
