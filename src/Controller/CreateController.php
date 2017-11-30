@@ -31,7 +31,9 @@ class CreateController extends AbstractController
             : $this->createCustomFormBuilder($createConfig->type, $entityConfig->class, $createConfig->options);
 
         $builder
-            ->add('__buttons', ButtonGroupType::class);
+            ->add('__buttons', ButtonGroupType::class, [
+                'translation_domain' => 'ruvents_admin',
+            ]);
 
         $builder->get('__buttons')
             ->add('submit', SubmitType::class, [

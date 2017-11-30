@@ -40,7 +40,9 @@ class EditController extends AbstractController
 
         $builder
             ->setData($entity)
-            ->add('__buttons', ButtonGroupType::class);
+            ->add('__buttons', ButtonGroupType::class, [
+                'translation_domain' => 'ruvents_admin',
+            ]);
 
         $buttonsBuilder = $builder->get('__buttons')
             ->add('submit', SubmitType::class, [
