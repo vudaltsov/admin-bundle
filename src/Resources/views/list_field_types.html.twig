@@ -26,6 +26,14 @@
     {% endif %}
 {% endblock %}
 
+{% block pre %}
+    {% if value is null %}
+        {{ block('null') }}
+    {% else %}
+        <pre>{{ value }}</pre>
+    {% endif %}
+{% endblock %}
+
 {% block null %}
     <span class="badge badge-dark">null</span>
 {% endblock %}
