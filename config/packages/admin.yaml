@@ -11,6 +11,13 @@ ruvents_admin:
             children:
                 - { title: Список, entity: 'user:list' }
                 - { title: Создать, entity: 'user:create' }
+        -
+            title: Группы
+            attributes: { icon: fa-bars }
+            active: "entity === 'group'"
+            children:
+                - { title: Список, entity: 'group:list' }
+                - { title: Создать, entity: 'group:create' }
     entities:
         user:
             class: App\Entity\User
