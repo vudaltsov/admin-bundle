@@ -46,10 +46,7 @@ class AddFieldsListener implements EventSubscriberInterface
                 continue;
             }
 
-            $options = $field->options + [
-                    'auto_initialize' => false,
-                    'translation_domain' => false,
-                ];
+            $options = $field->options + ['auto_initialize' => false];
 
             if (null === $field->type) {
                 $childBuilder = $factory->createBuilderForProperty($class, $field->name, null, $options);
