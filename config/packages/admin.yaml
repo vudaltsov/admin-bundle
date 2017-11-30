@@ -40,7 +40,7 @@ ruvents_admin:
             edit:
                 title: Редактирование пользователя
                 fields:
-                    - text
+                    - text@markdown
                     - simpleArray[0]
                     - '@group{Title}'
                     - group

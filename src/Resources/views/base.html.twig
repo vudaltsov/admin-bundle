@@ -8,6 +8,7 @@
     {% block css %}
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400&amp;subset=cyrillic">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/css/bootstrap-markdown.min.css">
         <link rel="stylesheet" href="{{ asset('bundles/ruventsadmin/css/app.min.css') }}">
     {% endblock %}
 </head>
@@ -32,6 +33,11 @@
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.6/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-markdown/2.10.0/js/bootstrap-markdown.min.js"></script>
+    {% if app.request.locale == 'ru' %}
+    <script src="{{ asset('bundles/ruventsadmin/vendor/node_modules/bootstrap-markdown/locale/bootstrap-markdown.ru.js') }}"></script>
+    {% endif %}
     <script src="{{ asset('bundles/ruventsadmin/js/app.js') }}"></script>
     {% if app.request.clientIp is same as('127.0.0.1') and app.environment is same as('dev') %}
     <script>

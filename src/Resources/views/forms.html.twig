@@ -45,6 +45,11 @@
     </div>
 {% endblock %}
 
+{% block ruvents_admin_markdown_widget %}
+    {% set attr = attr|merge({'data-provide': 'markdown', 'data-iconlibrary': 'fa', 'data-language': app.request.locale}) %}
+    {{ block('textarea_widget') }}
+{% endblock %}
+
 {% block form_errors %}
     {% if form.parent %}
         {{ parent() }}

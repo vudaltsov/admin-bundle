@@ -12,17 +12,17 @@ class ButtonGroupType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function buildView(FormView $view, FormInterface $form, array $options)
     {
-        return 'ruvents_admin_button_group';
+        $view->vars['ruvents_admin_button_group'] = true;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function getBlockPrefix()
     {
-        $view->vars['ruvents_admin_button_group'] = true;
+        return 'ruvents_admin_button_group';
     }
 
     /**

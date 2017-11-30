@@ -46,7 +46,9 @@ gulp.task('scripts', function () {
 
 gulp.task('vendor', function () {
     return gulp
-        .src([], {base: './'})
+        .src([
+            'node_modules/bootstrap-markdown/locale/bootstrap-markdown.ru.js'
+        ], {base: './'})
         .pipe(gulp.dest('vendor', {cwd: 'src/Resources/public'}))
 })
 
@@ -55,7 +57,6 @@ gulp.task('watch', function () {
 
     gulp.watch('assets/scss/**/*.scss', ['scss'])
     gulp.watch('assets/scripts/**/*.js', ['scripts'])
-    //gulp.watch([], livereload.reload)
 })
 
 gulp.task('default', ['clean', 'watch', 'scss', 'scripts', 'vendor'])
