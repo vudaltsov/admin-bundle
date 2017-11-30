@@ -14,7 +14,7 @@
     {% endfor %}
 {%- endblock form_rows -%}
 
-{% block file_widget -%}
+{% block file_widget1 -%}
     {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-file-input')|trim}) -%}
     <div>
         <label class="custom-file">
