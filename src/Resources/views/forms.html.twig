@@ -14,62 +14,6 @@
     {% endfor %}
 {%- endblock form_rows -%}
 
-{% block file_widget1 -%}
-    {%- set attr = attr|merge({class: (attr.class|default('') ~ ' custom-file-input')|trim}) -%}
-    <div>
-        <label class="custom-file">
-            {{- block('form_widget_simple', 'form_div_layout.html.twig') -}}
-            <span class="custom-file-control"></span>
-        </label>
-    </div>
-{%- endblock %}
-
-{% block checkbox_widget -%}
-    {%- set attr = attr|merge({class: attr.class|default('custom-control-input')}) -%}
-    {{- form_label(form, null, { widget: block('checkbox_widget', 'bootstrap_base_layout.html.twig'), label_attr: {class: 'custom-checkbox'} }) -}}
-{%- endblock %}
-
-{% block radio_widget -%}
-    {%- set attr = attr|merge({class: attr.class|default('custom-control-input')}) -%}
-    {{- form_label(form, null, { widget: block('radio_widget', 'bootstrap_base_layout.html.twig'), label_attr: {class: 'custom-radio'} }) -}}
-{%- endblock %}
-
-{% block choice_widget_expanded -%}
-    <div {{ block('widget_container_attributes') }}>
-        {%- for child in form %}
-            {{- form_widget(child, { translation_domain: choice_translation_domain }) -}}
-        {%- endfor -%}
-    </div>
-{%- endblock %}
-
-{% block checkbox_radio_label -%}
-    {#- Do not display the label if widget is not defined in order to prevent double label rendering -#}
-    {%- if widget is defined -%}
-        {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' custom-control')|trim}) -%}
-        {%- if required -%}
-            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) -%}
-        {%- endif -%}
-        {%- if parent_label_class is defined -%}
-            {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) -%}
-        {%- endif -%}
-        {%- if label is not same as(false) and label is empty -%}
-            {%- if label_format is not empty -%}
-                {%- set label = label_format|replace({
-                '%name%': name,
-                '%id%': id,
-                }) -%}
-            {%- else -%}
-                {%- set label = name|humanize -%}
-            {%- endif -%}
-        {%- endif -%}
-        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
-        {{- widget|raw -}}
-        <span class="custom-control-indicator"></span>
-        <span class="custom-control-description">{{ label is not same as(false) ? (translation_domain is same as(false) ? label : label|trans({}, translation_domain)) -}}</span>
-        </label>
-    {%- endif -%}
-{%- endblock %}
-
 {% block ruvents_admin_group_row %}
     {% set attr = attr|merge({class: (attr.class|default('col-12') ~ ' pb-3')|trim}) %}
     <div {{ block('widget_container_attributes') }}>
