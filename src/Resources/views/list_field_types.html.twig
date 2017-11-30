@@ -130,10 +130,10 @@
             {{ block('association_element') }}
             {% endwith %}
         {% else %}
-            {% for item in value %}
-                {% with {entity: item} %}
-                {{ block('association_element') }}<br>
-                {% endwith %}
+            {% for item in value -%}
+                {% with {entity: item} -%}
+                {{- not loop.first ? ',' }} {{ block('association_element') -}}
+                {% endwith -%}
             {% else %}
                 {{ block('empty') }}
             {% endfor %}
@@ -142,12 +142,12 @@
     {% endif %}
 {% endblock %}
 
-{% block association_element %}
-    {% if association_entity_name %}
+{% block association_element -%}
+    {%- if association_entity_name -%}
         <a href="{{ path('ruvents_admin_edit', {ruvents_admin_entity: association_entity_name, id: block('id')}) }}">
             {{- block('entity_to_string') -}}
         </a>
-    {% else %}
-        {{ block('entity_to_string') }}
-    {% endif %}
-{% endblock %}
+    {%- else -%}
+        {{- block('entity_to_string') -}}
+    {%- endif -%}
+{%- endblock %}
