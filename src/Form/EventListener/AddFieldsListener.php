@@ -5,32 +5,22 @@ namespace Ruvents\AdminBundle\Form\EventListener;
 use Ruvents\AdminBundle\Config\Model\Field\FormFieldConfig;
 use Ruvents\AdminBundle\Form\Type\GroupType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 class AddFieldsListener implements EventSubscriberInterface
 {
-    /**
-     * @var AuthorizationCheckerInterface
-     */
     private $authChecker;
 
-    /**
-     * @var FormBuilderInterface
-     */
-    private $builder;
-
-    /**
-     * @var FormFieldConfig[]
-     */
     private $fields;
 
-    public function __construct(AuthorizationCheckerInterface $authChecker, FormBuilderInterface $builder, array $fields)
+    /**
+     * @param FormFieldConfig[] $fields
+     */
+    public function __construct(AuthorizationCheckerInterface $authChecker, array $fields)
     {
         $this->authChecker = $authChecker;
-        $this->builder = $builder;
         $this->fields = $fields;
     }
 
@@ -48,14 +38,21 @@ class AddFieldsListener implements EventSubscriberInterface
     {
         $form = $event->getForm();
         $entity = $event->getData();
+        $class = $event->getForm()->getConfig()->getDataClass();
+        $factory = $form->getConfig()->getFormFactory();
 
         foreach ($this->fields as $field) {
             if ($field->requiresGranted && !$this->authChecker->isGranted($field->requiresGranted, $entity)) {
                 continue;
             }
 
-            $childBuilder = $this->builder
-                ->create($field->name, $field->type, $field->options + ['auto_initialize' => false]);
+            $options = $field->options + ['auto_initialize' => false];
+
+            if (null === $field->type) {
+                $childBuilder = $factory->createBuilderForProperty($class, $field->name, null, $options);
+            } else {
+                $childBuilder = $factory->createNamedBuilder($field->name, $field->type, null, $options);
+            }
 
             if ($childBuilder->getAttribute('ruvents_admin.is_group', false)) {
                 $form->add($group = $childBuilder->getForm());

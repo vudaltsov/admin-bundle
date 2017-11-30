@@ -92,6 +92,7 @@ class BuildEntitiesPass implements PassInterface
         $action->title = $data['title'];
         $action->requiresGranted = $data['requires_granted'];
         $action->type = $data['type'];
+        $action->options = $data['options'];
         $action->theme = $data['theme'];
         $action->fields = array_map([$this, 'buildFormField'], $data['fields']);
 

@@ -10,6 +10,7 @@ use Ruvents\AdminBundle\Config\Model\Field\FormFieldConfig;
  * @property string[]          $requiresGranted
  * @property string            $title
  * @property string            $type
+ * @property array             $options
  * @property string            $theme
  * @property FormFieldConfig[] $fields
  */

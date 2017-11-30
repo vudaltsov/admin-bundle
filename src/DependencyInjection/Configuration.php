@@ -2,7 +2,6 @@
 
 namespace Ruvents\AdminBundle\DependencyInjection;
 
-use Ruvents\AdminBundle\Form\Type\FieldsFormType;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\Builder\VariableNodeDefinition;
@@ -189,8 +188,10 @@ class Configuration implements ConfigurationInterface
                         ->cannotBeEmpty()
                     ->end()
                     ->scalarNode('type')
-                        ->defaultValue(FieldsFormType::class)
-                        ->cannotBeEmpty()
+                        ->defaultNull()
+                    ->end()
+                    ->variableNode('options')
+                        ->defaultValue([])
                     ->end()
                     ->scalarNode('theme')
                         ->defaultNull()

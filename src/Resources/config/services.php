@@ -5,7 +5,6 @@ namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 use Ruvents\AdminBundle\Config;
 use Ruvents\AdminBundle\Controller;
 use Ruvents\AdminBundle\Controller\ArgumentValueResolver;
-use Ruvents\AdminBundle\Form\Type\FieldsFormType;
 use Ruvents\AdminBundle\ListField\TypeContextProcessor\AssociationTypeContextProcessor;
 use Ruvents\AdminBundle\ListField\TypeGuesser\DoctrineTypeGuesser;
 use Ruvents\AdminBundle\Menu\MenuResolver;
@@ -55,8 +54,6 @@ return function (ContainerConfigurator $container) {
     $services->set(Controller\ListController::class)->public();
     $services->set(Controller\CreateController::class)->public();
     $services->set(Controller\EditController::class)->public();
-
-    $services->set(FieldsFormType::class);
 
     $services->set(Twig\ConfigExtension::class);
     $services->set(Twig\ListExtension::class)

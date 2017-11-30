@@ -5,7 +5,6 @@ namespace Ruvents\AdminBundle\Controller;
 use Ruvents\AdminBundle\Config\Model\EntityConfig;
 use Ruvents\AdminBundle\Form\Type\ButtonGroupType;
 use Ruvents\AdminBundle\Form\Type\DeleteType;
-use Ruvents\AdminBundle\Form\Type\FieldsFormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,10 +20,11 @@ class EditController extends AbstractController
      */
     public function __invoke(string $id, EntityConfig $entityConfig, Request $request): Response
     {
+        $editConfig = $entityConfig->edit;
         $class = $entityConfig->class;
         $manager = $this->getEntityManager($class);
 
-        if ($attributes = $entityConfig->edit->requiresGranted) {
+        if ($attributes = $editConfig->requiresGranted) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
@@ -34,12 +34,12 @@ class EditController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $builder = $this
-            ->get('form.factory')
-            ->createBuilder(FieldsFormType::class, $entity, [
-                'fields' => $entityConfig->edit->fields,
-                'data_class' => $class,
-            ])
+        $builder = null === $editConfig->type
+            ? $this->createEntityFormBuilder($editConfig->fields, $entityConfig->class, $editConfig->options)
+            : $this->createCustomFormBuilder($editConfig->type, $entityConfig->class, $editConfig->options);
+
+        $builder
+            ->setData($entity)
             ->add('__buttons', ButtonGroupType::class);
 
         $buttonsBuilder = $builder->get('__buttons')

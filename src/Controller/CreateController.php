@@ -4,7 +4,6 @@ namespace Ruvents\AdminBundle\Controller;
 
 use Ruvents\AdminBundle\Config\Model\EntityConfig;
 use Ruvents\AdminBundle\Form\Type\ButtonGroupType;
-use Ruvents\AdminBundle\Form\Type\FieldsFormType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,21 +18,19 @@ class CreateController extends AbstractController
      */
     public function __invoke(EntityConfig $entityConfig, Request $request): Response
     {
+        $createConfig = $entityConfig->create;
         $class = $entityConfig->class;
         $manager = $this->getEntityManager($class);
 
-        if ($attributes = $entityConfig->create->requiresGranted) {
+        if ($attributes = $createConfig->requiresGranted) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
-        $entity = new $class();
+        $builder = null === $createConfig->type
+            ? $this->createEntityFormBuilder($createConfig->fields, $entityConfig->class, $createConfig->options)
+            : $this->createCustomFormBuilder($createConfig->type, $entityConfig->class, $createConfig->options);
 
-        $builder = $this
-            ->get('form.factory')
-            ->createBuilder(FieldsFormType::class, $entity, [
-                'fields' => $entityConfig->create->fields,
-                'data_class' => $entityConfig->class,
-            ])
+        $builder
             ->add('__buttons', ButtonGroupType::class);
 
         $builder->get('__buttons')
@@ -53,6 +50,8 @@ class CreateController extends AbstractController
         $form = $builder
             ->getForm()
             ->handleRequest($request);
+
+        $entity = $form->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($entity);

@@ -3,8 +3,10 @@
 namespace Ruvents\AdminBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Ruvents\AdminBundle\Form\EventListener\AddFieldsListener;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController as SymfonyAbstractController;
 use Symfony\Component\Form\ClickableInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -62,5 +64,16 @@ abstract class AbstractController extends SymfonyAbstractController
             'ruvents_admin_entity' => $name,
             'id' => reset($id),
         ]);
+    }
+
+    protected function createCustomFormBuilder(string $type, string $class, array $options = []): FormBuilderInterface
+    {
+        return $this->get('form.factory')->createBuilder($type, null, ['data_class' => $class] + $options);
+    }
+
+    protected function createEntityFormBuilder(array $fields, string $class, array $options = []): FormBuilderInterface
+    {
+        return $this->createFormBuilder(null, ['data_class' => $class] + $options)
+            ->addEventSubscriber(new AddFieldsListener($this->get('security.authorization_checker'), $fields));
     }
 }
