@@ -14,7 +14,7 @@
             <thead>
             <tr>
                 {% for field in entity_config.list.fields %}
-                    <th>{{ field.title|default((field.propertyPath|default(field.type))|humanize|trans) }}</th>
+                    <th>{{ field.title ?: field.propertyPath|default(field.type)|humanize|trans }}</th>
                 {% endfor %}
             </tr>
             </thead>
