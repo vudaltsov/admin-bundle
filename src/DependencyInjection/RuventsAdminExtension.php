@@ -22,8 +22,40 @@ class RuventsAdminExtension extends ConfigurableExtension
         (new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config')))
             ->load('services.php');
 
+        $listableEntities = [];
+        $creatableEntities = [];
+        $editableEntities = [];
+        $deletableEntities = [];
+
+        foreach ($config['entities'] as $name => $entityConfig) {
+            if ($entityConfig['list']['enabled']) {
+                $listableEntities[] = $name;
+            }
+            if ($entityConfig['create']['enabled']) {
+                $creatableEntities[] = $name;
+            }
+            if ($entityConfig['edit']['enabled']) {
+                $editableEntities[] = $name;
+            }
+            if ($entityConfig['delete']['enabled']) {
+                $deletableEntities[] = $name;
+            }
+        }
+
         $container->setParameter('ruvents_admin.routing.entities_requirement',
-            implode('|', array_keys($config['entities'])) ?: 'no-entities');
+            $this->createRouteRequirement(array_keys($config['entities'])));
+
+        $container->setParameter('ruvents_admin.routing.list.entities_requirement',
+            $this->createRouteRequirement($listableEntities));
+
+        $container->setParameter('ruvents_admin.routing.create.entities_requirement',
+            $this->createRouteRequirement($creatableEntities));
+
+        $container->setParameter('ruvents_admin.routing.edit.entities_requirement',
+            $this->createRouteRequirement($editableEntities));
+
+        $container->setParameter('ruvents_admin.routing.delete.entities_requirement',
+            $this->createRouteRequirement($deletableEntities));
 
         $container->findDefinition(ConfigManager::class)
             ->setArgument('$data', $config)
@@ -40,5 +72,10 @@ class RuventsAdminExtension extends ConfigurableExtension
 
         $container->findDefinition(ListExtension::class)
             ->setArgument('$typesTemplate', $config['list']['types_template']);
+    }
+
+    private function createRouteRequirement(array $entityNames): string
+    {
+        return implode('|', $entityNames) ?: 'no-entities';
     }
 }
