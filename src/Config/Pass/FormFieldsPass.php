@@ -5,6 +5,7 @@ namespace Ruvents\AdminBundle\Config\Pass;
 use Doctrine\Common\Inflector\Inflector;
 use Ruvents\AdminBundle\Config\Model\Config;
 use Ruvents\AdminBundle\Form\Type\GroupType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symfony\Component\Form\Extension\Core\Type\BaseType;
@@ -63,7 +64,9 @@ class FormFieldsPass implements PassInterface
 
     private function getSymfonyFormTypeAliases(): array
     {
-        $aliases = [];
+        $aliases = [
+            'entity' => EntityType::class,
+        ];
 
         $finder = (new Finder())
             ->in(dirname((new \ReflectionClass(BaseType::class))->getFileName()))
