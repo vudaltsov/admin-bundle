@@ -38,12 +38,12 @@
     &.active {
         color: $white;
         background-color: $blue;
-        font-weight: $font-weight-normal;
+        font-weight: $font-weight-bold;
     }
 
     &[data-toggle=collapse]:not(.collapsed) {
         color: $white;
-        font-weight: $font-weight-normal;
+        font-weight: $font-weight-bold;
 
         > .menu-arrow {
             transform: rotate(90deg);
@@ -96,7 +96,7 @@
 
     &.active {
         color: $white;
-        font-weight: $font-weight-normal;
+        font-weight: $font-weight-bold;
     }
 
     @include transition();
