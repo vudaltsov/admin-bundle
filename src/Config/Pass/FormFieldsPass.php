@@ -7,6 +7,7 @@ use Doctrine\Common\Inflector\Inflector;
 use Ruvents\AdminBundle\Config\Model\Config;
 use Ruvents\AdminBundle\Form\Type\GroupType;
 use Ruvents\AdminBundle\Form\Type\MarkdownType;
+use Ruvents\UploadBundle\Form\Type\UploadType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -33,6 +34,10 @@ class FormFieldsPass implements PassInterface
         $aliases = $data['forms']['type_aliases'] += $this->getSymfonyFormTypeAliases();
         $aliases['group'] = GroupType::class;
         $aliases['markdown'] = MarkdownType::class;
+
+        if (class_exists(UploadType::class)) {
+            $aliases['upload'] = UploadType::class;
+        }
 
         foreach ($config->entities as $entity) {
             $entity->create->type = $this->resolveType($entity->create->type, $aliases);
