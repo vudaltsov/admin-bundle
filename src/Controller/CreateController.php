@@ -27,9 +27,11 @@ class CreateController extends AbstractController
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
+        $entity = new $class();
+
         $builder = null === $createConfig->type
-            ? $this->createEntityFormBuilder($createConfig->fields, $entityConfig->class, $createConfig->options)
-            : $this->createCustomFormBuilder($createConfig->type, $entityConfig->class, $createConfig->options);
+            ? $this->createEntityFormBuilder($createConfig->fields, $entity, $createConfig->options)
+            : $this->createCustomFormBuilder($createConfig->type, $entity, $createConfig->options);
 
         $builder
             ->add('__buttons', ButtonGroupType::class, [
@@ -53,8 +55,6 @@ class CreateController extends AbstractController
         $form = $builder
             ->getForm()
             ->handleRequest($request);
-
-        $entity = $form->getData();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($entity);

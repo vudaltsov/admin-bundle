@@ -36,14 +36,12 @@ class EditController extends AbstractController
         }
 
         $builder = null === $editConfig->type
-            ? $this->createEntityFormBuilder($editConfig->fields, $class, $editConfig->options)
-            : $this->createCustomFormBuilder($editConfig->type, $class, $editConfig->options);
+            ? $this->createEntityFormBuilder($editConfig->fields, $entity, $editConfig->options)
+            : $this->createCustomFormBuilder($editConfig->type, $entity, $editConfig->options);
 
-        $builder
-            ->setData($entity)
-            ->add('__buttons', ButtonGroupType::class, [
-                'translation_domain' => 'ruvents_admin',
-            ]);
+        $builder->add('__buttons', ButtonGroupType::class, [
+            'translation_domain' => 'ruvents_admin',
+        ]);
 
         $buttonsBuilder = $builder->get('__buttons')
             ->add('submit', SubmitType::class, [

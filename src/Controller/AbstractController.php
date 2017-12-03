@@ -67,14 +67,14 @@ abstract class AbstractController extends SymfonyAbstractController
         ]);
     }
 
-    protected function createCustomFormBuilder(string $type, string $class, array $options = []): FormBuilderInterface
+    protected function createCustomFormBuilder(string $type, $entity, array $options = []): FormBuilderInterface
     {
-        return $this->get('form.factory')->createBuilder($type, null, ['data_class' => $class] + $options);
+        return $this->get('form.factory')->createBuilder($type, $entity, $options);
     }
 
-    protected function createEntityFormBuilder(array $fields, string $class, array $options = []): FormBuilderInterface
+    protected function createEntityFormBuilder(array $fields, $entity, array $options = []): FormBuilderInterface
     {
-        return $this->createFormBuilder(null, ['data_class' => $class] + $options)
+        return $this->createFormBuilder($entity, $options)
             ->addEventSubscriber(new AddFieldsListener($this->get('security.authorization_checker'), $fields));
     }
 }
