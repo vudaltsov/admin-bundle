@@ -67,6 +67,17 @@ abstract class AbstractController extends SymfonyAbstractController
         ]);
     }
 
+    protected function getIdField($class)
+    {
+        if (is_object($class)) {
+            $class = get_class($class);
+        }
+
+        return $this->getEntityManager($class)
+            ->getClassMetadata($class)
+            ->getSingleIdentifierFieldName();
+    }
+
     protected function createCustomFormBuilder(string $type, $entity, array $options = []): FormBuilderInterface
     {
         return $this->get('form.factory')->createBuilder($type, $entity, $options);
