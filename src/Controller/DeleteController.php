@@ -25,10 +25,6 @@ class DeleteController extends AbstractController
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
-        if ($entityConfig->delete->enabled) {
-            return $this->redirectToList($entityConfig->name);
-        }
-
         $entity = $manager->find($class, $id);
 
         if (null === $entity) {
