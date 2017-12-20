@@ -16,13 +16,13 @@ var gulp = require('gulp'),
 
 gulp.task('clean', function () {
     return del.sync([
-        'src/Resources/public/{css,js}'
+        'Resources/public/{css,js}'
     ])
 })
 
 gulp.task('scss', function () {
     return gulp
-        .src('assets/scss/app.scss')
+        .src('Resources/assets/scss/app.scss')
         .pipe(sourcemaps.init())
         .pipe(sass())
         .on('error', suppressError)
@@ -30,18 +30,18 @@ gulp.task('scss', function () {
         .pipe(cssnano({zindex: false}))
         .pipe(sourcemaps.write())
         .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest('css', {cwd: 'src/Resources/public'}))
+        .pipe(gulp.dest('css', {cwd: 'Resources/public'}))
         .pipe(livereload())
 })
 
 gulp.task('scripts', function () {
     return gulp
         .src([
-            'assets/scripts/!(app)*.js',
-            'assets/scripts/app.js'
+            'Resources/assets/scripts/!(app)*.js',
+            'Resources/assets/scripts/app.js'
         ])
         .pipe(concat('app.js'))
-        .pipe(gulp.dest('js', {cwd: 'src/Resources/public'}))
+        .pipe(gulp.dest('js', {cwd: 'Resources/public'}))
 })
 
 gulp.task('vendor', function () {
@@ -49,14 +49,14 @@ gulp.task('vendor', function () {
         .src([
             'node_modules/bootstrap-markdown/locale/bootstrap-markdown.ru.js'
         ], {base: './'})
-        .pipe(gulp.dest('vendor', {cwd: 'src/Resources/public'}))
+        .pipe(gulp.dest('vendor', {cwd: 'Resources/public'}))
 })
 
 gulp.task('watch', function () {
     livereload.listen()
 
-    gulp.watch('assets/scss/**/*.scss', ['scss'])
-    gulp.watch('assets/scripts/**/*.js', ['scripts'])
+    gulp.watch('Resources/assets/scss/**/*.scss', ['scss'])
+    gulp.watch('Resources/assets/scripts/**/*.js', ['scripts'])
 })
 
 gulp.task('default', ['clean', 'watch', 'scss', 'scripts', 'vendor'])

@@ -1,6 +1,6 @@
 {
-    "name": "ruvents/admin-bundle",
-    "description": "RUVENTS Admin Bundle",
+    "name": "ruwork/admin-bundle",
+    "description": "Ruwork Admin Bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "authors": [
@@ -14,7 +14,7 @@
         "php": "^7.1.3",
         "doctrine/doctrine-bundle": "^1.6.10",
         "doctrine/orm": "^2.5.11",
-        "ruvents/paginator-bundle": "^0.1",
+        "ruwork/paginator-bundle": "^0.1",
         "sensio/framework-extra-bundle": "^5.0",
         "symfony/asset": "^3.4 || ^4.0",
         "symfony/expression-language": "^3.4 || ^4.0",
@@ -25,7 +25,7 @@
         "symfony/twig-bundle": "^3.4 || ^4.0"
     },
     "require-dev": {
-        "ruvents/upload-bundle": "^0.4.0@dev",
+        "ruwork/upload-bundle": "^0.4.0@dev",
         "symfony/console": "^3.4",
         "symfony/debug-bundle": "^3.4",
         "symfony/dotenv": "^3.4",
@@ -43,7 +43,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ruvents\\AdminBundle\\": "src/"
+            "Ruwork\\AdminBundle\\": "src/"
         }
     },
     "autoload-dev": {

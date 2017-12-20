@@ -1,16 +1,5 @@
 /node_modules/
-/public/uploads
-/composer.lock
-/symfony.lock
-/yarn.lock
-
-###> symfony/framework-bundle ###
-.env
-/public/bundles/
-/var/
 /vendor/
-###< symfony/framework-bundle ###
-
-###> symfony/web-server-bundle ###
-.web-server-pid
-###< symfony/web-server-bundle ###
+/composer.lock
+/phpunit.xml
+/yarn.lock
