@@ -30,13 +30,19 @@ final class ResolvedMenuItem
      */
     private $children;
 
-    public function __construct(string $title, array $attributes, ?string $href, bool $active = false, array $children = [])
+    /**
+     * @var string[]
+     */
+    private $requiresGranted;
+
+    public function __construct(string $title, array $attributes, ?string $href, bool $active = false, array $children = [], array $requiresGranted = [])
     {
         $this->title = $title;
         $this->attributes = $attributes;
         $this->href = $href;
         $this->active = $active;
         $this->children = $children;
+        $this->requiresGranted = $requiresGranted;
     }
 
     public function getTitle(): string
@@ -71,5 +77,13 @@ final class ResolvedMenuItem
     public function getChildren(): array
     {
         return $this->children;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getRequiresGranted(): array
+    {
+        return $this->requiresGranted;
     }
 }
