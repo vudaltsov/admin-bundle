@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Ruwork\AdminBundle\Menu;
+namespace Ruvents\AdminBundle\Menu;
 
 final class ResolvedMenuItem
 {
@@ -30,9 +30,15 @@ final class ResolvedMenuItem
      */
     private $children;
 
-    public function __construct(string $title, array $attributes, ?string $href, bool $active = false, array $children = [])
+    /**
+     * @var string[]
+     */
+    private $requiresGranted;
+
+    public function __construct(string $title, array $requiresGranted, array $attributes, ?string $href, bool $active = false, array $children = [])
     {
         $this->title = $title;
+        $this->requiresGranted = $requiresGranted;
         $this->attributes = $attributes;
         $this->href = $href;
         $this->active = $active;
@@ -47,6 +53,11 @@ final class ResolvedMenuItem
     public function getAttributes(): array
     {
         return $this->attributes;
+    }
+
+    public function getRequiresGranted(): array
+    {
+        return $this->requiresGranted;
     }
 
     /**
