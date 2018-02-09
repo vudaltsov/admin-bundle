@@ -106,7 +106,9 @@ class MenuResolver
             $item->title,
             $item->attributes,
             $href = $this->urlGenerator->generate($route, $routeParams),
-            $this->isActive($href, $item->activeExpression, $item)
+            $this->isActive($href, $item->activeExpression, $item),
+            [],
+            $item->requiresGranted
         );
     }
 
