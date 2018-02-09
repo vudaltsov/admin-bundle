@@ -67,7 +67,7 @@ class MenuResolver
 
     private function resolveUrlItem(UrlItemConfig $item): ResolvedMenuItem
     {
-        return new ResolvedMenuItem($item->title, $item->attributes, $item->url);
+        return new ResolvedMenuItem($item->title, $item->attributes, $item->url, false, [], $item->requiresGranted);
     }
 
     private function resolveChildrenItem(ChildrenItemConfig $item): ResolvedMenuItem
@@ -82,7 +82,7 @@ class MenuResolver
 
         $active = $active || $this->isActive(null, $item->activeExpression, $item);
 
-        return new ResolvedMenuItem($item->title, $item->attributes, null, $active, $children);
+        return new ResolvedMenuItem($item->title, $item->attributes, null, $active, $children, $item->requiresGranted);
     }
 
     private function resolveRouteItem(RouteItemConfig $item): ResolvedMenuItem
@@ -91,7 +91,9 @@ class MenuResolver
             $item->title,
             $item->attributes,
             $href = $this->urlGenerator->generate($item->route, $item->routeParams),
-            $this->isActive($href, $item->activeExpression, $item)
+            $this->isActive($href, $item->activeExpression, $item),
+            [],
+            $item->requiresGranted
         );
     }
 
