@@ -52,7 +52,7 @@
             {% embed '@RuventsPaginator/bootstrap_4.html.twig' with {paginator: paginator, class: 'justify-content-center'} %}
                 {% trans_default_domain 'ruvents_admin' %}
 
-                {% block href path(route, route_params|merge({page: page.first ? null : page.number})) %}
+                {% block href path(route, route_params|merge({page: page.first ? null : page.number})|merge(app.request.query.all)) %}
 
                 {% block previous_label 'Previous'|trans %}
 
