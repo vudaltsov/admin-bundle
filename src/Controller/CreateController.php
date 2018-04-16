@@ -23,7 +23,7 @@ class CreateController extends AbstractController
         $class = $entityConfig->class;
         $manager = $this->getEntityManager($class);
 
-        if ($attributes = $createConfig->requiresGranted) {
+        if ($attributes = array_merge($entityConfig->requiresGranted, $createConfig->requiresGranted)) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
