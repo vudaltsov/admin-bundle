@@ -21,7 +21,7 @@ class DeleteController extends AbstractController
         $class = $entityConfig->class;
         $manager = $this->getEntityManager($class);
 
-        if ($attributes = array_merge($entityConfig->requiresGranted, $entityConfig->edit->requiresGranted)) {
+        if ($attributes = array_merge($entityConfig->requiresGranted, $entityConfig->delete->requiresGranted)) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
