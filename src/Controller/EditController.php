@@ -25,7 +25,7 @@ class EditController extends AbstractController
         $class = $entityConfig->class;
         $manager = $this->getEntityManager($class);
 
-        if ($attributes = $editConfig->requiresGranted) {
+        if ($attributes = array_merge($entityConfig->requiresGranted, $editConfig->requiresGranted)) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
