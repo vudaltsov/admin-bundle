@@ -22,7 +22,7 @@ class ListController extends AbstractController
         $listConfig = $entityConfig->list;
         $class = $entityConfig->class;
 
-        if ($attributes = $listConfig->requiresGranted) {
+        if ($attributes = array_merge($entityConfig->requiresGranted, $listConfig->requiresGranted)) {
             $this->denyAccessUnlessGranted($attributes, $class);
         }
 
