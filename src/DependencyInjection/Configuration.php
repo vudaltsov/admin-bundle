@@ -157,7 +157,7 @@ class Configuration implements ConfigurationInterface
                     ->beforeNormalization()
                         ->ifString()
                         ->then(function ($value) {
-                            if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?>\{(?<title>.*)\})?$/', $value, $matches)) {
+                            if (!preg_match('/^(?<property_path>[\[\]\.\w\-]+)?(?>\@(?<type>[\w\-\\\]+))?(?>\{(?<title>.*)\})?$/', $value, $matches)) {
                                 throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
                             }
 
@@ -235,7 +235,7 @@ class Configuration implements ConfigurationInterface
                         ->then(function ($value) {
                             static $groupI = 1;
 
-                            if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w-\\\]+))?(?<attr_class>(?>\.[\w-]+)+)?(?>\{(?<label>.*)\})?$/', $value, $matches)) {
+                            if (!preg_match('/^(?<property_path>[\[\]\.\w-]+)?(?>\@(?<type>[\w\-\\\]+))?(?<attr_class>(?>\.[\w\-]+)+)?(?>\{(?<label>.*)\})?$/', $value, $matches)) {
                                 throw new \InvalidArgumentException(sprintf('"%s" is not a valid field definition.', $value));
                             }
 
